@@ -1,0 +1,76 @@
+{
+  "name": "aio",
+  "version": "0.1.0",
+  "description": "All In One",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite --open",
+    "preview": "vite preview",
+    "lint": "eslint src",
+    "lint:fix": "yarn lint --fix"
+  },
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anorebel/aio.git"
+  },
+  "author": "AnoRebel <hacker4rebel@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "AIO",
+    "socket.io",
+    "express",
+    "collaboration",
+    "realtime"
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@vueuse/core": "^6.5.3",
+    "@vueuse/integrations": "^6.5.3",
+    "axios": "^0.22.0",
+    "localforage": "^1.10.0",
+    "mitt": "^3.0.0",
+    "vue": "^3.2.20",
+    "vue-i18n": "^9.2.0-beta.12",
+    "vue-router": "^4.0.11",
+    "vuex": "^4.0.2",
+    "vuex-persist": "^3.1.3",
+    "codemirror": "^5.61.1",
+    "socket.io-client": "^4.3.0"
+  },
+  "devDependencies": {
+    "@intlify/vite-plugin-vue-i18n": "^2.4.0",
+    "@rollup/plugin-alias": "^3.1.5",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^7.19.1",
+    "prettier": "^2.4.1",
+    "sass": "^1.42.1",
+    "vite": "^2.6.7",
+    "windicss": "^3.1.9",
+    "vite-plugin-windicss": "^1.3.0",
+    "@headlessui/vue": "^1.4.1",
+    "@heroicons/vue": "^1.0.4",
+    "concurrently": "^6.2.0",
+    "nodemon": "^2.0.7"
+  }
+}
