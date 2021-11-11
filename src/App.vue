@@ -1,21 +1,70 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <router-view v-slot="{ Component, route }" :key="$route.path">
+    <!-- Use any custom transition and fallback to `fade` -->
+    <transition :name="route.meta.transition || 'fade'" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<script>
+export default {
+  name: "App",
+  setup() {
+    return {};
+  },
+};
+</script>
+
+<style scoped>
+/* mode: out-in */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.moveUp-enter-active {
+  animation: fadeIn 0.25s ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.moveUp-leave-active {
+  animation: moveUp 0.25s ease-in;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-400px);
+  }
+}
+
+/* mode: out-in */
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 0.25s, transform 0.25s;
+}
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30%);
 }
 </style>

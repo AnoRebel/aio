@@ -1,6 +1,9 @@
+const mitt = require("mitt");
 const robot = require("robotjs");
 const io = require("socket.io-client");
 const SimpleSignalClient = require("simple-signal-client");
+
+export const emitter = mitt();
 
 let _SOCKET = null, _SignalClient = null;
 
