@@ -1,3 +1,17 @@
+<script>
+import { useQueryProvider } from "vue-query";
+import { VueQueryDevTools } from "vue-query/devtools";
+
+export default {
+  name: "App",
+  components: { VueQueryDevTools, },
+  setup() {
+    useQueryProvider();
+    return {};
+  },
+};
+</script>
+
 <template>
   <router-view v-slot="{ Component, route }" :key="$route.path">
     <!-- Use any custom transition and fallback to `fade` -->
@@ -5,16 +19,8 @@
       <component :is="Component" />
     </transition>
   </router-view>
+  <VueQueryDevTools />
 </template>
-
-<script>
-export default {
-  name: "App",
-  setup() {
-    return {};
-  },
-};
-</script>
 
 <style scoped>
 /* mode: out-in */
