@@ -4,14 +4,13 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 import BaseLayout from "@/layouts/BaseLayout.vue";
 import SideBarLayout from "@/layouts/SideBarLayout.vue";
-import SideBar from "@/components/SideBar.vue";
 </script>
 
 <template>
-  <SideBar />
-  <img alt="Vue logo" src="@/assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <SideBarLayout>
+    <img alt="Vue logo" src="@/assets/logo.png" />
+    <HelloWorld msg="Hello Vue 3 + Vite" />
+  </SideBarLayout>
 </template>
 
-<style>
-</style>
+<style></style>
