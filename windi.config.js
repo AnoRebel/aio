@@ -29,6 +29,18 @@ export default defineConfig({
       "2xl": "1536px",
       // => @media (min-width: 1536px) { ... }
     },
+    cursor: {
+      auto: "auto",
+      default: "default",
+      pointer: "pointer",
+      wait: "wait",
+      text: "text",
+      move: "move",
+      "not-allowed": "not-allowed",
+      crosshair: "crosshair",
+      "zoom-in": "zoom-in",
+      dragging: "dragging",
+    },
   },
   plugins: [
     require("windicss/plugin/aspect-ratio"),

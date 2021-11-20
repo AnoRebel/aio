@@ -473,9 +473,9 @@
   integrity sha512-mwdvobi1gBNWt+dgd68IuRHG3xh6BXs0472ZO8vClr49HOhoVg9M+myQQntBQBHblcXreM8NX/pLkBzXSyUfmQ==
 
 "@intlify/vite-plugin-vue-i18n@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@intlify/vite-plugin-vue-i18n/-/vite-plugin-vue-i18n-3.1.0.tgz#616993ed498abefe8981e26fbd98bd302b55e3d3"
-  integrity sha512-cZttcRleYbbHq+DcohyIzFQE10pgNrkZPG1CIeNggjx5gqpoWfDd2N1782+IegxQAHpuvFeE4h9rYalu37YxRA==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@intlify/vite-plugin-vue-i18n/-/vite-plugin-vue-i18n-3.1.1.tgz#f9b7fe4734cdccb365e269ad95b93b2c4e1fda5e"
+  integrity sha512-w9rvDVVxm+/hpdBC9bdabpKhR3enBxsPwFcMcCkRPwVg9HhOfPrxjQCuJDY8+4imDnyXbdI9WymMrcCemYH57g==
   dependencies:
     "@intlify/bundle-utils" next
     "@intlify/shared" beta
@@ -2895,9 +2895,9 @@ rc@^1.2.7, rc@^1.2.8:
     strip-json-comments "~2.0.1"
 
 react-query@^3.30.0:
-  version "3.33.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.33.1.tgz#faae63724806c94b51c17c072b76684752bfe186"
-  integrity sha512-RtvQKhD4sJkoAGbyFpLmftGezz1KL19SeGdmjIOLUulyPTZuhcn3gemee96yjEiBk/9LFB5CuSiqywZY20Qj5Q==
+  version "3.33.2"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.33.2.tgz#b74f46ed35c6dcdbdb15ca39e158a4fbf1573737"
+  integrity sha512-hlGMl0FyFvO2mrgJObgKbJMzulzB4bzQZnh4ZhekCKWNhf0XH007Gi71wsaO+xCTyv8DNGxnrgBe/V+rvTWFjQ==
   dependencies:
     "@babel/runtime" "^7.5.5"
     broadcast-channel "^3.4.1"

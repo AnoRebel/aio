@@ -52,12 +52,11 @@ export default {
     onBeforeUnmount(() => {
       if (player.value != null) player.value.destroy();
     });
-    return {};
+    return { playerRef };
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import "plyr/dist/plyr.css";
+// @import "plyr/dist/plyr.css";
 </style>
-

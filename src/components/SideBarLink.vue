@@ -1,8 +1,10 @@
 <script>
+import { AppLink } from "@/components";
 // import { emitter } from "@/utils";
 
 export default {
   name: "SideBarLink",
+  components: { AppLink },
   props: {
     blank: {
       type: Boolean,
@@ -17,9 +19,6 @@ export default {
       required: true,
     },
   },
-  setup() {
-    return {};
-  },
 };
 </script>
 
@@ -28,7 +27,7 @@ export default {
     v-if="blank"
     class="group relative transition-all duration-[400ms] ease-out hover:bg-[#1d1b31]"
   >
-    <router-link :to="{ name: link.href }" class="flex items-center no-underline">
+    <app-link :to="{ name: link.href }" class="flex items-center no-underline">
       <i
         class="
           bx bx-grid-alt
@@ -49,7 +48,7 @@ export default {
         ]"
         >{{ link.name }}</span
       >
-    </router-link>
+    </app-link>
     <ul
       :class="[
         'bg-[#1d1b31] pt-[3px] pr-5 pb-1.5 pl-4 opacity-0 pointer-events-none',
@@ -60,20 +59,21 @@ export default {
       ]"
     >
       <li class="relative list-none transition-all duration-[400ms] ease-out hover:bg-[#1d1b31]">
-        <router-link
+        <app-link
           :class="[
             'link_name text-base py-[5px] px-0 whitespace-nowrap opacity-60 hover:opacity-100 transition-all duration-300 ease-out',
             sidebar.close ? 'text-lg opacity-100 block' : 'hidden',
           ]"
           :to="{ name: link.href }"
-          >{{ link.name }}</router-link
         >
+          {{ link.name }}
+        </app-link>
       </li>
     </ul>
   </li>
   <li v-else class="group relative transition-all duration-[400ms] ease-out hover:bg-[#1d1b31]">
     <div :class="['items-center content-between', sidebar.close ? 'block' : 'flex']">
-      <router-link :to="{ name: link.href }" class="flex items-center no-underline">
+      <app-link :to="{ name: link.href }" class="flex items-center no-underline">
         <i
           class="
             bx bx-collection
@@ -94,7 +94,7 @@ export default {
           ]"
           >{{ link.name }}</span
         >
-      </router-link>
+      </app-link>
       <i
         :class="[
           'bx bxs-chevron-down arrow h-[50px] min-w-[78px] text-center leading-[50px] text-[#fff] text-xl cursor-pointer transition-all ease-out transform',
@@ -114,21 +114,22 @@ export default {
       ]"
     >
       <li class="relative transition-all duration-[400ms] ease-out hover:bg-[#1d1b31]">
-        <router-link
+        <app-link
           :class="[
             'text-[#fff] text-base py-[5px] px-0 whitespace-nowrap opacity-60 hover:opacity-100 transition-all duration-300 ease-out',
             sidebar.close ? 'text-lg opacity-100 block' : 'hidden',
           ]"
           :to="{ name: link.href }"
-          >{{ link.name }}</router-link
         >
+          {{ link.name }}
+        </app-link>
       </li>
       <li
         v-for="(lnk, index) in link.sub_links"
         :key="index"
         class="relative transition-all duration-[400ms] ease-out hover:bg-[#1d1b31]"
       >
-        <router-link
+        <app-link
           class="
             text-[#fff] text-base
             py-[5px]
@@ -142,8 +143,9 @@ export default {
           "
           :class="{ 'text-lg opacity-100': sidebar.close }"
           :to="{ name: lnk.href }"
-          >{{ lnk.name }}</router-link
         >
+          {{ lnk.name }}
+        </app-link>
       </li>
     </ul>
   </li>
