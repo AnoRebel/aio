@@ -19,7 +19,7 @@ export default {
     <div
       :class="[
         'fixed bottom-0 flex items-center justify-between py-3 px-0 transition-all duration-500 ease-out',
-        closed ? 'bg-none hidden w-[78px]' : 'bg-[#1d1b31] w-[260px]',
+        closed ? 'bg-none w-[78px]' : 'bg-[#1d1b31] w-[260px]',
       ]"
     >
       <div class="flex items-center">

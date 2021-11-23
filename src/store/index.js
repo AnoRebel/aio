@@ -1,3 +1,5 @@
+import useLaneStore from "@/store/laneStore";
+
 import { defineStore, acceptHMRUpdate } from "pinia";
 
 // useStore could be anything like useUser, useCart
@@ -11,3 +13,5 @@ export const useMainStore = defineStore("main", {
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useMainStore, import.meta.hot));
 }
+
+export { useLaneStore };
