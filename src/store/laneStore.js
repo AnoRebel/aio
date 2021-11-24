@@ -136,8 +136,20 @@ const useLaneStore = defineStore("lanes", {
   }),
   actions: {
     updateLanes(data) {
-      let tickets = this.getLanes.find(l => l.name == data.lane).tickets;
-      console.log(tickets, data.ticket);
+      console.log(data);
+      this.lanes = data;
+    },
+    addTicket({ lane, ticket }) {
+      console.log(lane, ticket);
+      let tickets = this.lanes.find(l => l.name == lane).tickets;
+      let newTicket = {
+        title: ticket.title || "AnoRebel",
+        author: ticket.author || "Ano Rebel",
+        created_at: Date.now(),
+        level: ticket.level || "Low Level",
+        comments_count: ticket.comments_count || 0,
+      };
+      tickets.push(newTicket);
     },
   },
   getters: {

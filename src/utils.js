@@ -1,32 +1,9 @@
-// const mitt = require("mitt");
 // const robot = require("robotjs");
-// const io = require("socket.io-client");
 // const SimpleSignalClient = require("simple-signal-client");
+// const { mouse, left, right, up, down, straightTo, Point } = require("@nut-tree/nut-js");
+// import SimpleSignalClient from "simple-signal-client";
 import mitt from "mitt";
-import * as robot from "robotjs";
 import io from "socket.io-client";
-import SimpleSignalClient from "simple-signal-client";
-
-/**
-  Possible fix for robotjs
-
-  yarn add @originjs/vite-plugin-commonjs --dev
-
-  import { viteCommonjs, esbuildCommonjs } from "@originjs/vite-plugin-commonjs"
-
-  export default {
-    plugins: [
-        viteCommonjs()
-    ],
-    optimizeDeps:{
-      esbuildOptions:{
-        plugins:[
-          esbuildCommonjs(['react-calendar','react-date-picker']) 
-        ]
-      }
-    }
-  }
- */
 
 export const emitter = mitt();
 
@@ -54,6 +31,39 @@ const CHAT_EVENTS = {
   TYPING: "TYPING",
   CHAT: "CHAT",
   NOT_TYPING: "NOT_TYPING",
+};
+
+class coordsAndSize {
+  constructor(event, video) {
+    this.x = event.clientX - video.getBoundingClientRect().left;
+    this.y = event.clientY - video.getBoundingClientRect().top;
+    this.videoWidth = video.getBoundingClientRect().width;
+    this.videoHeight = video.getBoundingClientRect().height;
+  }
+}
+
+function convertCoord(coords, xy) {
+  if (xy === "x") {
+    return (robot.getScreenSize().width * coords.x) / coords.videoWidth;
+  } else if (xy === "y") {
+    return (robot.getScreenSize().height * coords.y) / coords.videoHeight;
+  } else {
+    return;
+  }
+}
+
+const nut_ex = async () => {
+  await mouse.move(left(500));
+  await mouse.move(up(500));
+  await mouse.move(right(500));
+  await mouse.move(down(500));
+
+  mouse.config.mouseSpeed = 2000;
+  const fast = new Point(500, 350);
+  await mouse.move(straightTo(fast));
+  mouse.config.mouseSpeed = 100;
+  const slow = new Point(100, 150);
+  await mouse.move(straightTo(slow));
 };
 
 export const countWords = doc => {

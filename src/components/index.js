@@ -7,6 +7,7 @@ import Controls from "@/components/Controls.vue";
 import SideBarLink from "@/components/SideBarLink.vue";
 import SideBarFooter from "@/components/SideBarFooter.vue";
 import KanbanBoard from "@/components/KanbanBoard.vue";
+import Notification from "@/components/Notification.vue";
 
 export {
   AppLink,
@@ -18,4 +19,5 @@ export {
   SideBarLink,
   SideBarFooter,
   KanbanBoard,
+  Notification,
 };

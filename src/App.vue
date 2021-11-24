@@ -2,9 +2,11 @@
 import { useQueryProvider } from "vue-query";
 import { VueQueryDevTools } from "vue-query/devtools";
 
+import { Notification } from "@/components";
+
 export default {
   name: "App",
-  components: { VueQueryDevTools, },
+  components: { VueQueryDevTools, Notification },
   setup() {
     useQueryProvider();
     return {};
@@ -19,6 +21,7 @@ export default {
       <component :is="Component" />
     </transition>
   </router-view>
+  <Notification />
   <VueQueryDevTools />
 </template>
 

@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import alias from "@rollup/plugin-alias";
+// import commonjs from "@rollup/plugin-commonjs";
+// import { nodeResolve } from "@rollup/plugin-node-resolve";
 import WindiCSS from "vite-plugin-windicss";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import path from "path";

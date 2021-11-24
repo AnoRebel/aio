@@ -1,16 +1,23 @@
 <script>
-import { ref, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import draggable from "vuedraggable";
 
 import { useLaneStore } from "@/store";
 import { Ticket, Controls } from "@/components";
+import { emitter } from "@/utils";
 
 export default {
   name: "KanbanBoard",
   components: { draggable, Ticket, Controls },
   setup() {
     const dragging = ref(false);
-    const details = ref("");
+    const showForm = ref(false);
+    const details = reactive({
+      title: "",
+      author: "",
+      level: "",
+      comments_count: "",
+    });
     const laneStore = useLaneStore();
     const dragOptions = computed(() => {
       return {
@@ -20,17 +27,14 @@ export default {
         ghostClass: "ghost",
       };
     });
-    const lanes = computed({
-      get: () => laneStore.getLanes,
-      set: value => {
-        console.log(value);
-        laneStore.updateLanes(value);
-      },
-    });
+    const lanes = computed(() => laneStore.getLanes);
+    watch(lanes, values => laneStore.updateLanes(values), { deep: true });
     const addTicket = lane => {
-      laneStore.updateLanes({ lane, ticket: details.value });
+      laneStore.addTicket({ lane, ticket: details });
+      details.author = "";
+      showForm.value = false;
     };
-    return { lanes, dragging, dragOptions, details, addTicket };
+    return { lanes, dragging, dragOptions, details, addTicket, showForm };
   },
 };
 </script>
@@ -86,12 +90,20 @@ export default {
           </template>
           <template #footer>
             <form
+              v-if="showForm"
               class="flex flex-col border-t border-gray-300 pt-2 mt-2"
               @submit.prevent="addTicket(lane.name)"
             >
-              <input v-model="details" type="text" class="my-1 rounded-md h-8" />
+              <input v-model="details.author" type="text" class="my-1 rounded-md h-8" />
               <button class="text-white rounded py-1.5 bg-gray-900">Add</button>
             </form>
+            <button
+              v-else
+              class="text-white rounded py-1.5 bg-green-800 w-full"
+              @click="showForm = true"
+            >
+              Add
+            </button>
           </template>
         </draggable>
       </div>

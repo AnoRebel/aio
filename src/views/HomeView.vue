@@ -7,7 +7,7 @@ import { KanbanBoard } from "@/components";
 
 <template>
   <SideBarLayout>
-    <div class="w-full flex flex-col">
+    <div class="w-full h-full flex flex-col">
       <KanbanBoard />
     </div>
   </SideBarLayout>
