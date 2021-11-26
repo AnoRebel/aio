@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
 import messages from "@intlify/vite-plugin-vue-i18n/messages";
 import App from "./App.vue";
+import { AppLink } from "@/components";
 import router from "./router";
 import "virtual:windi.css";
 
@@ -16,6 +17,7 @@ const i18n = createI18n({
 const pinia = createPinia();
 
 const app = createApp(App);
+app.component("AppLink", AppLink);
 app.use(router);
 app.use(pinia);
 app.use(i18n);

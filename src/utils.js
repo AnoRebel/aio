@@ -1,6 +1,7 @@
+const require = name => new URL(name, import.meta.url).href;
 // const robot = require("robotjs");
-// const SimpleSignalClient = require("simple-signal-client");
 // const { mouse, left, right, up, down, straightTo, Point } = require("@nut-tree/nut-js");
+const SimpleSignalClient = require("simple-signal-client");
 // import SimpleSignalClient from "simple-signal-client";
 import mitt from "mitt";
 import io from "socket.io-client";
@@ -10,7 +11,7 @@ export const emitter = mitt();
 let _SOCKET = null,
   _SignalClient = null;
 
-const connectionState = {
+const CONNECTION_STATE = {
   CONNECTED: "CONNECTED",
   CONNECTING: "CONNECTING",
   FAILED: "FAILED",
@@ -170,7 +171,7 @@ export const getSignalClient = () => {
   return _SignalClient;
 };
 
-export const blah = () => {
+export const gotStream = () => {
   // Older browsers may not have srcObject
   if ("srcObject" in video) {
     video.srcObject = stream;
@@ -181,4 +182,135 @@ export const blah = () => {
   video.addEventListener("loadedmetadata", () => {
     video.play();
   });
+};
+
+export const connectToPeer = peerId => {
+  const signalClient = getSignalClient();
+  const peer = signalClient.connectToPeer(peerId);
+  peer.on("connected", () => {
+    console.log("connected to peer");
+  });
+  peer.on("data", data => {
+    console.log("data received: ", data);
+    if (data.type === VIDEO_EVENTS.VIDEO_RESUMED) {
+      video.play();
+    } else if (data.type === VIDEO_EVENTS.AUDIO_MUTED) {
+      video.muted = true;
+    } else if (data.type === VIDEO_EVENTS.AUDIO_UNMUTED) {
+      video.muted = false;
+    }
+  });
+  peer.on("error", error => {
+    console.log("error: ", error);
+  });
+  peer.on("close", () => {
+    console.log("close");
+  });
+};
+
+export const connectToPeerWithPeerId = peerId => {
+  const socket = createSocket();
+  socket.on("connect", () => {
+    console.log("connected");
+  });
+  socket.on("disconnect", () => {
+    console.log("disconnected");
+  });
+  socket.on("peer", peerId => {
+    console.log("peer: ", peerId);
+    connectToPeer(peerId);
+  });
+
+  socket.on("signal", data => {
+    console.log("signal: ", data);
+    const signalClient = getSignalClient();
+    signalClient.sendSignal(data);
+  });
+
+  socket.on("peer-signal", data => {
+    console.log("peer-signal: ", data);
+    const signalClient = getSignalClient();
+    signalClient.receiveSignal(data);
+  });
+  socket.on("message", data => {
+    console.log("message: ", data);
+    if (data.type === "peer-id") {
+      connectToPeer(data.peerId, socket);
+    }
+  });
+};
+
+export const mediaUnsurported = () => {
+  if (!navigator.getUserMedia) return false;
+  return true;
+};
+
+export const getMedia = async () => {
+  try {
+    const constraints = {
+      video: true,
+      audio: true,
+    };
+    const stream = await getUserMedia(constraints);
+    return stream;
+  } catch (err) {
+    console.log("getUserMedia() error: ", err);
+  }
+};
+
+export const getVideo = async () => {
+  try {
+    const constraints = {
+      video: true,
+      audio: false,
+    };
+    const stream = await getUserMedia(constraints);
+    return stream;
+  } catch (err) {
+    console.log("getUserMedia() error: ", err);
+  }
+};
+
+export const getAudio = async () => {
+  try {
+    const constraints = {
+      video: false,
+      audio: true,
+    };
+    const stream = await getUserMedia(constraints);
+    return stream;
+  } catch (err) {
+    console.log("getUserMedia() error: ", err);
+  }
+};
+
+export const getUserMedia = async constraints => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    return stream;
+  } catch (err) {
+    console.log("getUserMedia() error: ", err);
+  }
+};
+
+const isValidUrl = url => {
+  const regex =
+    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+  let validUrl = regex.test(url);
+  return validUrl;
+};
+
+// Gibberish, for now..
+const scrollProgress = () => {
+  return {
+    init() {
+      window.addEventListener("scroll", () => {
+        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        this.percent = Math.round((winScroll / height) * 100);
+      });
+    },
+    circumference: 30 * 2 * Math.PI,
+    percent: 0,
+  };
 };

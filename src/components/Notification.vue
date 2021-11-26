@@ -12,16 +12,16 @@ export default {
       message: "Notification",
     });
     onMounted(() => {
-      emitter.on("toggle", e => {
+      emitter.on("notify", e => {
         note.show = e.show;
         if (e.show) {
-          note.title = e.title || "";
+          note.title = e.title || "Notification";
           note.message = e.message;
         }
       });
     });
     onBeforeUnmount(() => {
-      emitter.off("toggle");
+      emitter.off("notify");
     });
     return { note };
   },
@@ -40,7 +40,8 @@ export default {
         p-2
         rounded
         shadow-lg
-        min-h-28 min-w-54
+        min-h-24 min-w-54
+        max-h-54 max-w-94
         z-50
         bg-gray-800
         text-white
@@ -63,7 +64,7 @@ export default {
         </svg>
       </div>
       <div class="flex flex-col">
-        <div class="font-semibold">{{ note.title }}</div>
+        <div class="font-semibold px-1">{{ note.title }}</div>
         <div class="text-sm p-1">{{ note.message }}</div>
       </div>
     </div>

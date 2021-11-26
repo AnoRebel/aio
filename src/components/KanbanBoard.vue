@@ -1,5 +1,5 @@
 <script>
-import { ref, reactive, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import draggable from "vuedraggable";
 
 import { useLaneStore } from "@/store";
@@ -11,14 +11,8 @@ export default {
   components: { draggable, Ticket, Controls },
   setup() {
     const dragging = ref(false);
-    const showForm = ref(false);
-    const details = reactive({
-      title: "",
-      author: "",
-      level: "",
-      comments_count: "",
-    });
     const laneStore = useLaneStore();
+    const details = ref([]);
     const dragOptions = computed(() => {
       return {
         group: "tickets",
@@ -28,13 +22,22 @@ export default {
       };
     });
     const lanes = computed(() => laneStore.getLanes);
+    lanes.value.forEach(_ => {
+      details.value.push({
+        show: false,
+        title: "",
+        author: "",
+        level: "",
+        comments_count: "",
+      });
+    });
     watch(lanes, values => laneStore.updateLanes(values), { deep: true });
-    const addTicket = lane => {
-      laneStore.addTicket({ lane, ticket: details });
-      details.author = "";
-      showForm.value = false;
+    const addTicket = (index, lane) => {
+      laneStore.addTicket({ lane, ticket: details.value[index] });
+      details.value[index].author = "";
+      details.value[index].show = false;
     };
-    return { lanes, dragging, dragOptions, details, addTicket, showForm };
+    return { lanes, dragging, dragOptions, details, addTicket };
   },
 };
 </script>
@@ -43,7 +46,7 @@ export default {
   <Controls />
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 grid-cols-1">
     <div
-      v-for="lane in lanes"
+      v-for="(lane, index) in lanes"
       :key="lane.name"
       class="border border-gray-300 rounded-md bg-gray-50"
     >
@@ -90,19 +93,19 @@ export default {
           </template>
           <template #footer>
             <form
-              v-if="showForm"
+              v-if="details[index].show"
               class="flex flex-col border-t border-gray-300 pt-2 mt-2"
-              @submit.prevent="addTicket(lane.name)"
+              @submit.prevent="addTicket(index, lane.name)"
             >
-              <input v-model="details.author" type="text" class="my-1 rounded-md h-8" />
+              <input v-model="details[index].author" type="text" class="my-1 rounded-md h-8" />
               <button class="text-white rounded py-1.5 bg-gray-900">Add</button>
             </form>
             <button
               v-else
               class="text-white rounded py-1.5 bg-green-800 w-full"
-              @click="showForm = true"
+              @click="details[index].show = true"
             >
-              Add
+              Add Ticket
             </button>
           </template>
         </draggable>

@@ -1,4 +1,6 @@
 <script>
+import { formatDistanceToNow } from "date-fns";
+
 export default {
   name: "Ticket",
   props: {
@@ -26,6 +28,8 @@ export default {
   >
     <span>{{ ticket.level }}</span>
     <span>Comments: {{ ticket.comments_count }}</span>
-    <span> - {{ ticket.author }} {{ ticket.created_at }}</span>
+    <!-- <span>
+      - {{ ticket.author }} {{ formatDistanceToNow(ticket.created_at, { addSuffix: true }) }}
+    </span> -->
   </div>
 </template>
