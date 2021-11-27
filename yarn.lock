@@ -2008,6 +2008,11 @@ ejs@^2.5.7:
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.7.4.tgz#48661287573dcc53e366c7a1ae52c3a120eec9ba"
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
+emoji-picker-element@^1.6.5:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.8.2.tgz#56ffa9d46be479c3ebdb38c0857dac343594d446"
+  integrity sha512-XNSuntOOz1+JBklOqj+tqJqbInp88i12JXv0ZyQNCaHlkAlUf7Ak9e857S/uVTFlVtA6pJ6qeXLxvMdrL0ngFQ==
+
 emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
@@ -5481,6 +5486,16 @@ vue-demi@^0.10.1:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.10.1.tgz#229b81395510f02f4ee255344557a12cc0120930"
   integrity sha512-L6Oi+BvmMv6YXvqv5rJNCFHEKSVu7llpWWJczqmAQYOdmPPw5PNYoz1KKS//Fxhi+4QP64dsPjtmvnYGo1jemA==
 
+vue-demi@^0.11.2:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
+  integrity sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==
+
+vue-easy-lightbox@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.2.4.tgz#1215300a0b4df8c2a2541ac1706bcf4be055c206"
+  integrity sha512-V3hCEb1vWvMw6hbEe8fHBXvCYg2t01qGzYfvyu+z7InQTEq+8T1yRXqDiDI2NFSIQuScldOESo6kNklf21GPtw==
+
 vue-eslint-parser@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-8.0.1.tgz#25e08b20a414551531f3e19f999902e1ecf45f13"
@@ -5537,6 +5552,14 @@ vuedraggable@^4.1.0:
   integrity sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==
   dependencies:
     sortablejs "1.14.0"
+
+vuemoji-picker@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/vuemoji-picker/-/vuemoji-picker-0.0.7.tgz#382d365e75644683dba0530945ed4495eaeb1708"
+  integrity sha512-Q0RM6qo67Px3evoY9EbEg7HzBuk+u3D+c9r4wMyU71GQQnDFKEo4ZmI7OVjonwkCyk/6C6RDpQAtGOwfahXkoA==
+  dependencies:
+    emoji-picker-element "^1.6.5"
+    vue-demi "^0.11.2"
 
 vuex-persist@^3.1.3:
   version "3.1.3"

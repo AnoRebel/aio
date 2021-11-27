@@ -86,10 +86,12 @@
     "socket.io-client": "^4.3.0",
     "url-regex-safe": "^2.1.0",
     "vue": "^3.2.22",
+    "vue-easy-lightbox": "^1.2.4",
     "vue-i18n": "^9.2.0-beta.20",
     "vue-query": "^1.13.0",
     "vue-router": "^4.0.12",
     "vuedraggable": "^4.1.0",
+    "vuemoji-picker": "^0.0.7",
     "vuex": "^4.0.2",
     "vuex-persist": "^3.1.3"
   },

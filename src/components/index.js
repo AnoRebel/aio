@@ -8,12 +8,15 @@ import SideBarLink from "@/components/SideBarLink.vue";
 import SideBarFooter from "@/components/SideBarFooter.vue";
 import KanbanBoard from "@/components/KanbanBoard.vue";
 import Notification from "@/components/Notification.vue";
-import GroupChat from "@/components/GroupChat.vue";
-import PrivateChat from "@/components/PrivateChat.vue";
 import SideUser from "@/components/SideUser.vue";
 import SideImage from "@/components/SideImage.vue";
 import SideAddProject from "@/components/SideAddProject.vue";
 import PinCodeField from "@/components/PinCodeField.vue";
+import EmojiPicker from "@/components/EmojiPicker.vue";
+import PrivateChatHeader from "@/components/PrivateChatHeader.vue";
+import SingleMessage from "@/components/SingleMessage.vue";
+import GroupChat from "@/components/GroupChat.vue";
+import PrivateChat from "@/components/PrivateChat.vue";
 
 export {
   AppLink,
@@ -27,9 +30,12 @@ export {
   SideBarFooter,
   KanbanBoard,
   Notification,
-  GroupChat,
-  PrivateChat,
   SideUser,
   SideImage,
   SideAddProject,
+  EmojiPicker,
+  PrivateChatHeader,
+  SingleMessage,
+  GroupChat,
+  PrivateChat,
 };
