@@ -1,7 +1,8 @@
 <template>
   <div>
-    <audio ref="playerRef" id="player" controls>
-      <source :src="audio.src" :type=`audio/${audio.type}` />
+    <audio ref="playerRef" id="player" controls preload="metadata">
+      <source :src="audio.src" :type="audio.type" />
+      <a :href="audio.src" download>Download</a>
     </audio>
   </div>
 </template>
@@ -9,6 +10,8 @@
 <script>
 import { onMounted, ref, onBeforeUnmount } from "vue";
 import Plyr from "plyr";
+
+import "plyr/dist/plyr.css";
 // Some browsers partially implement mediaDevices. We can't just assign an object
 // with getUserMedia as it would overwrite existing properties.
 // Here, we will just add the getUserMedia property if it's missing.
@@ -41,12 +44,16 @@ export default {
       type: String,
       default: "",
     },
+    muted: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const playerRef = ref(null);
     const player = ref(null);
     onMounted(() => {
-      player.value = new Plyr(playerRef.value, { title: props.title, muted: props.audio.muted });
+      player.value = new Plyr(playerRef.value, { title: props.title, muted: props.muted });
     });
 
     onBeforeUnmount(() => {
@@ -57,6 +64,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-// @import "plyr/dist/plyr.css";
-</style>
+<style scoped lang="scss"></style>

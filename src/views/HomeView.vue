@@ -7,7 +7,10 @@ import { KanbanBoard, PrivateChat, GroupChat } from "@/components";
 
 <template>
   <div class="h-full w-full">
-    <PrivateChat />
+    <ChatLayout>
+
+      <GroupChat />
+    </ChatLayout>
   </div>
 </template>
 

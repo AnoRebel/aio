@@ -24,9 +24,9 @@ export default {
   },
   emits: ["emoji-selected"],
   props: {
-    class: {
+    classNames: {
       type: String,
-      default: "bottom-18 right-24",
+      default: "bottom-15 right-24",
     },
   },
   setup(_, { emit }) {
@@ -113,7 +113,7 @@ export default {
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <div class="absolute bottom-18 right-24">
+            <div :class="['absolute', classNames]">
               <VuemojiPicker
                 :picker-style="style"
                 :is-dark="isDark"

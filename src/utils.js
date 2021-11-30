@@ -171,13 +171,13 @@ export const getSignalClient = () => {
   return _SignalClient;
 };
 
-export const gotStream = () => {
+export const gotStream = (video, stream) => {
   // Older browsers may not have srcObject
   if ("srcObject" in video) {
     video.srcObject = stream;
   } else {
     // Avoid using this in new browsers, as it is going away.
-    video.src = window.URL.createObjectURL(stream);
+    video.src = URL.createObjectURL(stream);
   }
   video.addEventListener("loadedmetadata", () => {
     video.play();
@@ -313,4 +313,53 @@ const scrollProgress = () => {
     circumference: 30 * 2 * Math.PI,
     percent: 0,
   };
+};
+
+export const setSrcObject = (element, f) => {
+  if ("srcObject" in element) {
+    try {
+      // eslint-disable-next-line no-param-reassign
+      element.srcObject = f; // this is the new way. only safari supports multiple inputs, it is possible to put here media streams and files and blobs, but current new browsers support only media stream so need a fallback.
+    } catch (e) {
+      if (e.name !== "TypeError") throw e;
+      // Avoid using this in new browsers, as it is going away.
+      // eslint-disable-next-line no-param-reassign
+      element.src = URL.createObjectURL(f);
+    }
+  }
+  // eslint-disable-next-line no-param-reassign
+  else element.src = URL.createObjectURL(f);
+};
+
+export const loadAudioFile = (audio, file) => {
+  let onloadeddataResolve;
+  let onloadeddataReject;
+  // once
+  const onloadeddataEv = () => {
+    onloadeddataResolve();
+    audio.removeEventListener("loadeddata", onloadeddataEv);
+    audio.removeEventListener("error", onerrorEv);
+  };
+  const onerrorEv = e => {
+    onloadeddataReject(e.srcElement.error);
+    audio.removeEventListener("loadeddata", onloadeddataEv);
+    audio.removeEventListener("error", onerrorEv);
+  };
+  audio.addEventListener("loadeddata", onloadeddataEv);
+  audio.addEventListener("error", onerrorEv);
+  const promise = new Promise((resolve, reject) => {
+    onloadeddataResolve = resolve;
+    onloadeddataReject = reject;
+  }); // inversion of control promise
+  // try load it:
+  try {
+    // audio.src =  url; // = http://example.org/myfile.mp3 or .ogg
+    setSrcObject(audio, file);
+    audio.load();
+  } catch (e) {
+    audio.removeEventListener("loadeddata", onloadeddataEv);
+    audio.removeEventListener("error", onerrorEv);
+    onloadeddataReject(e);
+  }
+  return promise;
 };

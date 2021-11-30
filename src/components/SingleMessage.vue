@@ -3,11 +3,18 @@ import { ref } from "vue";
 import VueEasyLightbox from "vue-easy-lightbox";
 import { InformationCircleIcon } from "@heroicons/vue/outline";
 
-import { EmojiPicker } from "@/components";
+import { EmojiPicker, VoicePlayer, AudioPlayer, VideoPlayer } from "@/components";
 
 export default {
   name: "SingleMessage",
-  components: { EmojiPicker, InformationCircleIcon, VueEasyLightbox },
+  components: {
+    EmojiPicker,
+    InformationCircleIcon,
+    VueEasyLightbox,
+    VoicePlayer,
+    AudioPlayer,
+    VideoPlayer,
+  },
   props: {
     message: {
       type: Object,
@@ -39,8 +46,8 @@ export default {
       >
         <div :class="['flex items-center group', message.isSender ? 'flex-row-reverse' : '']">
           <app-link
-            v-if="message.hasImage"
-            class="relative block w-64 h-64 relative flex flex-shrink-0 max-w-xs lg:max-w-md"
+            v-if="message.type == 'image'"
+            class="relative block w-64 h-64 flex flex-shrink-0 max-w-xs lg:max-w-md"
             to="#"
           >
             <img
@@ -65,12 +72,44 @@ export default {
               @click="imgDetails"
             />
           </app-link>
+          <div
+            v-if="message.type == 'audio'"
+            class="relative block w-64 flex flex-shrink-0 max-w-xs lg:max-w-md"
+          >
+            <VoicePlayer
+              :class="[
+                'shadow-md w-full rounded-lg',
+                message.isSender ? 'rounded-br-none bg-green-600' : 'rounded-bl-none bg-gray-300',
+              ]"
+              :audio="message.audio"
+            />
+          </div>
+          <div
+            v-if="message.type == 'video'"
+            class="relative block w-74 flex flex-shrink-0 max-w-xs lg:max-w-md"
+          >
+            <VideoPlayer
+              :class="[
+                'shadow-md w-full h-full rounded-lg object-cover',
+                message.isSender ? 'rounded-br-none' : 'rounded-bl-none',
+              ]"
+              :video="message.video"
+              :title="message.video.name"
+            />
+            <InformationCircleIcon
+              :class="[
+                'absolute top-2 h-6 w-6 text-white cursor-pointer z-10',
+                message.isSender ? 'right-2' : 'left-2',
+              ]"
+              @click="videoDetails"
+            />
+          </div>
           <span
-            v-else
+            v-if="message.type == 'text'"
             :class="[
               'px-4 py-2 rounded-lg inline-block',
               message.isSender
-                ? 'rounded-br-none bg-blue-600 text-white'
+                ? 'rounded-br-none bg-green-600 text-white'
                 : 'rounded-bl-none bg-gray-300 text-gray-600',
             ]"
           >

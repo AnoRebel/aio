@@ -2,13 +2,13 @@
 import { onMounted } from "vue";
 import { InformationCircleIcon } from "@heroicons/vue/outline";
 
-import { SingleMessage, EmojiPicker, PrivateChatHeader } from "@/components";
+import { SingleMessage, EmojiPicker, PrivateChatHeader, VoicePlayer } from "@/components";
 import { emitter } from "@/utils";
 import { users, messages } from "@/seed";
 
 export default {
   name: "PrivateChat",
-  components: { EmojiPicker, InformationCircleIcon, SingleMessage, PrivateChatHeader },
+  components: { EmojiPicker, InformationCircleIcon, SingleMessage, PrivateChatHeader, VoicePlayer },
   setup() {
     onMounted(() => {
       const el = document.getElementById("messages");
@@ -27,18 +27,11 @@ export default {
 
 <template>
   <!-- component -->
-  <div class="flex-1 sm:px-6 justify-between flex flex-col h-screen">
+  <div class="h-[90%] w-full flex-1 pl-2 pr-1 justify-between flex flex-col bg-gray-900">
     <PrivateChatHeader :user="users[0]" />
-    <div
+    <main
       id="messages"
-      class="
-        flex flex-col
-        space-y-4
-        p-3
-        overflow-y-auto
-        scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2
-        scrolling-touch
-      "
+      class="flex flex-col space-y-4 py-3 overflow-y-auto scrollbar scrolling-touch"
     >
       <div class="chat-message">
         <div class="flex items-end">
@@ -132,362 +125,12 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
         </div>
       </div>
       <p class="p-4 text-center text-sm text-gray-500">FRI 3:04 PM</p>
-      <template v-for="message in messages" :key="message.id">
+      <template v-for="(message, index) in messages" :key="message.id">
+        <p v-if="index % 3 == 1" class="p-4 text-center text-sm text-gray-500">FRI 3:04 PM</p>
         <SingleMessage :message="message" />
       </template>
-      <!-- <div class="chat-message">
-        <div class="flex items-end justify-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-            <div class="flex flex-row-reverse items-center group">
-              <span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white"
-                >Your error message says permission denied, npm global installs must be given root
-                privileges.</span
-              >
-              <button
-                type="button"
-                class="
-                  hidden
-                  group-hover:block
-                  flex flex-shrink-0
-                  focus:outline-none
-                  mx-2
-                  block
-                  rounded-full
-                  text-gray-500
-                  hover:text-gray-900 hover:bg-gray-700
-                  bg-gray-800
-                  w-8
-                  h-8
-                  p-2
-                "
-              >
-                <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                  <path
-                    d="M10.001,7.8C8.786,7.8,7.8,8.785,7.8,10s0.986,2.2,2.201,2.2S12.2,11.215,12.2,10S11.216,7.8,10.001,7.8z
-	 M3.001,7.8C1.786,7.8,0.8,8.785,0.8,10s0.986,2.2,2.201,2.2S5.2,11.214,5.2,10S4.216,7.8,3.001,7.8z M17.001,7.8
-	C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.8,17.001,7.8z"
-                  />
-                </svg>
-              </button>
-              <button
-                type="button"
-                class="
-                  hidden
-                  group-hover:block
-                  flex flex-shrink-0
-                  focus:outline-none
-                  mx-2
-                  block
-                  rounded-full
-                  text-gray-500
-                  hover:text-gray-900 hover:bg-gray-700
-                  bg-gray-800
-                  w-8
-                  h-8
-                  p-2
-                "
-              >
-                <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                  <path
-                    d="M19,16.685c0,0-2.225-9.732-11-9.732V2.969L1,9.542l7,6.69v-4.357C12.763,11.874,16.516,12.296,19,16.685z"
-                  />
-                </svg>
-              </button>
-              <button
-                type="button"
-                class="
-                  hidden
-                  group-hover:block
-                  flex flex-shrink-0
-                  focus:outline-none
-                  mx-2
-                  block
-                  rounded-full
-                  text-gray-500
-                  hover:text-gray-900 hover:bg-gray-700
-                  bg-gray-800
-                  w-8
-                  h-8
-                  p-2
-                "
-              >
-                <svg viewBox="0 0 24 24" class="w-full h-full fill-current">
-                  <path
-                    d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-3.54-4.46a1 1 0 0 1 1.42-1.42 3 3 0 0 0 4.24 0 1 1 0 0 1 1.42 1.42 5 5 0 0 1-7.08 0zM9 11a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm6 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-2"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end justify-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-            <div class="flex flex-row-reverse items-center group">
-              <a
-                class="relative block w-64 h-64 relative flex flex-shrink-0 max-w-xs lg:max-w-md"
-                href="#"
-              >
-                <img
-                  class="absolute shadow-md w-full h-full rounded-lg rounded-br-none object-cover"
-                  src="https://unsplash.com/photos/8--kuxbxuKU/download?force=true&w=640"
-                  alt="hiking"
-                />
-                <InformationCircleIcon
-                  class="absolute top-2 right-2 h-6 w-6 text-white cursor-pointer"
-                  @click="imgDetails"
-                />
-              </a>
-              <button
-                type="button"
-                class="
-                  hidden
-                  group-hover:block
-                  flex flex-shrink-0
-                  focus:outline-none
-                  mx-2
-                  block
-                  rounded-full
-                  text-gray-500
-                  hover:text-gray-900 hover:bg-gray-700
-                  bg-gray-800
-                  w-8
-                  h-8
-                  p-2
-                "
-              >
-                <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                  <path
-                    d="M10.001,7.8C8.786,7.8,7.8,8.785,7.8,10s0.986,2.2,2.201,2.2S12.2,11.215,12.2,10S11.216,7.8,10.001,7.8z
-	 M3.001,7.8C1.786,7.8,0.8,8.785,0.8,10s0.986,2.2,2.201,2.2S5.2,11.214,5.2,10S4.216,7.8,3.001,7.8z M17.001,7.8
-	C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.8,17.001,7.8z"
-                  />
-                </svg>
-              </button>
-              <button
-                type="button"
-                class="
-                  hidden
-                  group-hover:block
-                  flex flex-shrink-0
-                  focus:outline-none
-                  mx-2
-                  block
-                  rounded-full
-                  text-gray-500
-                  hover:text-gray-900 hover:bg-gray-700
-                  bg-gray-800
-                  w-8
-                  h-8
-                  p-2
-                "
-              >
-                <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                  <path
-                    d="M19,16.685c0,0-2.225-9.732-11-9.732V2.969L1,9.542l7,6.69v-4.357C12.763,11.874,16.516,12.296,19,16.685z"
-                  />
-                </svg>
-              </button>
-              <button
-                type="button"
-                class="
-                  hidden
-                  group-hover:block
-                  flex flex-shrink-0
-                  focus:outline-none
-                  mx-2
-                  block
-                  rounded-full
-                  text-gray-500
-                  hover:text-gray-900 hover:bg-gray-700
-                  bg-gray-800
-                  w-8
-                  h-8
-                  p-2
-                "
-              >
-                <svg viewBox="0 0 24 24" class="w-full h-full fill-current">
-                  <path
-                    d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-3.54-4.46a1 1 0 0 1 1.42-1.42 3 3 0 0 0 4.24 0 1 1 0 0 1 1.42 1.42 5 5 0 0 1-7.08 0zM9 11a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm6 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-2"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600"
-                >Command was run with root privileges. I'm sure about that.</span
-              >
-            </div>
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600"
-                >I've update the description so it's more obviously now</span
-              >
-            </div>
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600"
-                >FYI https://askubuntu.com/a/700266/510172</span
-              >
-            </div>
-            <div>
-              <span
-                class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"
-              >
-                Check the line above (it ends with a # so, I'm running it as root )
-                <pre># npm install -g @vue/devtools</pre>
-              </span>
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-1"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end justify-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white"
-                >Any updates on this issue? I'm getting the same error when trying to install
-                devtools. Thanks</span
-              >
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-2"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-            <div>
-              <span
-                class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"
-                >Thanks for your message David. I thought I'm alone with this issue. Please, 👍 the
-                issue to support it :)</span
-              >
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-1"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end justify-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-blue-600 text-white"
-                >Are you using sudo?</span
-              >
-            </div>
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white"
-                >Run this command sudo chown -R `whoami` /Users/{{ your_user_profile }}/.npm-global/
-                then install the package globally without using sudo</span
-              >
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-2"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600"
-                >It seems like you are from Mac OS world. There is no /Users/ folder on linux
-                😄</span
-              >
-            </div>
-            <div>
-              <span
-                class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"
-                >I have no issue with any other packages installed with root permission
-                globally.</span
-              >
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-1"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end justify-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white"
-                >yes, I have a mac. I never had issues with root permission as well, but this helped
-                me to solve the problem</span
-              >
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-2"
-          />
-        </div>
-      </div>
-      <div class="chat-message">
-        <div class="flex items-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600"
-                >I get the same error on Arch Linux (also with sudo)</span
-              >
-            </div>
-            <div>
-              <span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600"
-                >I also have this issue, Here is what I was doing until now: #1076</span
-              >
-            </div>
-            <div>
-              <span
-                class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"
-                >even i am facing</span
-              >
-            </div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            class="w-6 h-6 rounded-full order-1"
-          />
-        </div>
-      </div> -->
-    </div>
-    <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+    </main>
+    <footer class="px-4 pt-3 pb-2">
       <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
           <button
@@ -528,16 +171,19 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           placeholder="Write Something"
           class="
             w-full
-            focus:outline-none focus:placeholder-gray-400
+            focus:(outline-none
+            ring-0
+            border-0
+            placeholder-gray-400)
             text-gray-600
             placeholder-gray-600
             pl-12
             bg-gray-200
             rounded-full
-            py-3
+            py-2
           "
         />
-        <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+        <div class="absolute right-[1px] items-center inset-y-0 hidden sm:flex">
           <button
             type="button"
             class="
@@ -650,8 +296,8 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
               items-center
               justify-center
               rounded-full
-              h-12
-              w-12
+              h-10
+              w-10
               transition
               duration-500
               ease-in-out
@@ -674,29 +320,31 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </button>
         </div>
       </div>
-    </div>
+    </footer>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.scrollbar-w-2::-webkit-scrollbar {
-  width: 0.25rem;
-  height: 0.25rem;
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(236, 236, 236, var(--tw-bg-opacity)) rgba(17, 24, 39, var(--tw-bg-opacity));
+}
+.scrollbar::-webkit-scrollbar {
+  cursor: pointer;
+  width: 0.65rem;
+  height: 0.65rem;
 }
 
-.scrollbar-track-blue-lighter::-webkit-scrollbar-track {
-  --bg-opacity: 1;
-  background-color: #f7fafc;
-  background-color: rgba(247, 250, 252, var(--bg-opacity));
+.scrollbar::-webkit-scrollbar-track {
+  cursor: pointer;
+  background-color: #111827;
+  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
 }
 
-.scrollbar-thumb-blue::-webkit-scrollbar-thumb {
-  --bg-opacity: 1;
-  background-color: #edf2f7;
-  background-color: rgba(237, 242, 247, var(--bg-opacity));
-}
-
-.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
-  border-radius: 0.25rem;
+.scrollbar::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  background-color: #ececec;
+  background-color: rgba(236, 236, 236, var(--tw-bg-opacity));
 }
 </style>

@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex sm:items-center justify-between py-1 border-b-2 border-gray-200">
+  <div class="flex sm:items-center justify-between py-1 shadow">
     <div class="flex items-center space-x-4">
       <img
         :src="user.image"

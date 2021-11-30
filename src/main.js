@@ -2,10 +2,11 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
 import messages from "@intlify/vite-plugin-vue-i18n/messages";
-import App from "./App.vue";
+import App from "@/App.vue";
 import { AppLink } from "@/components";
-import router from "./router";
+import router from "@/router";
 import "virtual:windi.css";
+import "@/assets/scss/style.scss";
 
 const i18n = createI18n({
   legacy: false,

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <video ref="playerRef" id="player" playsinline controls>
-      <source :src="video.src" :type=`video/${video.type}` />
+    <video ref="playerRef" id="player" playsinline controls preload="metadata" class="h-full w-full object-cover">
+      <source :src="video.src" :type="video.type" />
+      <a :href="video.src" download>Download</a>
     </video>
   </div>
 </template>
@@ -9,6 +10,8 @@
 <script>
 import { onMounted, ref, onBeforeUnmount } from "vue";
 import Plyr from "plyr";
+
+import "plyr/dist/plyr.css";
 // Some browsers partially implement mediaDevices. We can't just assign an object
 // with getUserMedia as it would overwrite existing properties.
 // Here, we will just add the getUserMedia property if it's missing.
@@ -41,12 +44,16 @@ export default {
       type: String,
       default: "",
     },
+    muted: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const playerRef = ref(null);
     const player = ref(null);
     onMounted(() => {
-      player.value = new Plyr(playerRef.value, { title: props.title, muted: props.video.muted });
+      player.value = new Plyr(playerRef.value, { title: props.title, muted: props.muted });
     });
 
     onBeforeUnmount(() => {
@@ -57,7 +64,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-// @import "plyr/dist/plyr.css";
-</style>
-
+<style scoped lang="scss"></style>

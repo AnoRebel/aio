@@ -1,8 +1,9 @@
 import Ticket from "@/components/Ticket.vue";
 import AppLink from "@/components/AppLink.vue";
 import Controls from "@/components/Controls.vue";
-// import AudioPlayer from "@/components/AudioPlayer.vue";
-// import VideoPlayer from "@/components/VideoPlayer.vue";
+import VoicePlayer from "@/components/VoicePlayer.vue";
+import AudioPlayer from "@/components/AudioPlayer.vue";
+import VideoPlayer from "@/components/VideoPlayer.vue";
 // import VCodeMirror from "@/components/VCodeMirror.vue";
 import SideBarLink from "@/components/SideBarLink.vue";
 import SideBarFooter from "@/components/SideBarFooter.vue";
@@ -14,6 +15,7 @@ import SideAddProject from "@/components/SideAddProject.vue";
 import PinCodeField from "@/components/PinCodeField.vue";
 import EmojiPicker from "@/components/EmojiPicker.vue";
 import PrivateChatHeader from "@/components/PrivateChatHeader.vue";
+import GroupChatHeader from "@/components/GroupChatHeader.vue";
 import SingleMessage from "@/components/SingleMessage.vue";
 import GroupChat from "@/components/GroupChat.vue";
 import PrivateChat from "@/components/PrivateChat.vue";
@@ -23,8 +25,9 @@ export {
   Ticket,
   Controls,
   PinCodeField,
-  // AudioPlayer,
-  // VideoPlayer,
+  VoicePlayer,
+  AudioPlayer,
+  VideoPlayer,
   // VCodeMirror,
   SideBarLink,
   SideBarFooter,
@@ -35,6 +38,7 @@ export {
   SideAddProject,
   EmojiPicker,
   PrivateChatHeader,
+  GroupChatHeader,
   SingleMessage,
   GroupChat,
   PrivateChat,
