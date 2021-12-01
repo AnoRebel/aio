@@ -33,6 +33,7 @@ const navigation = [
     name: "Team",
     icon: UsersIcon,
     current: false,
+    count: 3,
     children: [
       { name: "Overview", href: "#" },
       { name: "Members", href: "#" },
@@ -44,6 +45,7 @@ const navigation = [
     name: "Projects",
     icon: FolderIcon,
     current: false,
+    count: 3,
     children: [
       { name: "Overview", href: "#" },
       { name: "Members", href: "#" },
@@ -55,6 +57,7 @@ const navigation = [
     name: "Calendar",
     icon: CalendarIcon,
     current: false,
+    count: 3,
     children: [
       { name: "Overview", href: "#" },
       { name: "Members", href: "#" },
@@ -66,6 +69,7 @@ const navigation = [
     name: "Documents",
     icon: InboxIcon,
     current: false,
+    count: 3,
     children: [
       { name: "Overview", href: "#" },
       { name: "Members", href: "#" },
@@ -77,6 +81,7 @@ const navigation = [
     name: "Reports",
     icon: ChartBarIcon,
     current: false,
+    count: 3,
     children: [
       { name: "Overview", href: "#" },
       { name: "Members", href: "#" },
@@ -141,7 +146,7 @@ export default {
                 :class="[
                   item.current
                     ? 'bg-gray-100 text-gray-900'
-                    : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    : 'bg-white text-gray-600 hover:(bg-gray-50 text-gray-900)',
                   'group w-full flex items-center pl-2 py-2 text-sm font-medium rounded-md',
                 ]"
               >
@@ -161,8 +166,8 @@ export default {
                 :class="[
                   item.current
                     ? 'bg-gray-100 text-gray-900'
-                    : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                  'group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500',
+                    : 'bg-white text-gray-600 hover:(bg-gray-50 text-gray-900)',
+                  'group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:(outline-none ring-2 ring-indigo-500)',
                 ]"
               >
                 <component
@@ -172,6 +177,15 @@ export default {
                 />
                 <span class="flex-1">
                   {{ item.name }}
+                </span>
+                <span
+                  v-if="item.count"
+                  :class="[
+                    item.current ? 'bg-white' : 'bg-gray-100 group-hover:bg-gray-200',
+                    'ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full',
+                  ]"
+                >
+                  {{ item.count }}
                 </span>
                 <svg
                   :class="[
@@ -202,7 +216,8 @@ export default {
                     font-medium
                     text-gray-600
                     rounded-md
-                    hover:text-gray-900 hover:bg-gray-50
+                    hover:(text-gray-900
+                    bg-gray-50)
                   "
                 >
                   {{ subItem.name }}
@@ -239,10 +254,10 @@ export default {
                       pr-3
                       text-base text-gray-900
                       placeholder-gray-500
-                      focus:outline-none
-                      focus:ring-0
-                      focus:border-transparent
-                      focus:placeholder-gray-400
+                      focus:(outline-none
+                      ring-0
+                      border-transparent
+                      placeholder-gray-400)
                       sm:hidden
                     "
                     placeholder="Search"
@@ -261,10 +276,10 @@ export default {
                       pr-3
                       text-base text-gray-900
                       placeholder-gray-500
-                      focus:outline-none
-                      focus:ring-0
-                      focus:border-transparent
-                      focus:placeholder-gray-400
+                      focus:(outline-none
+                      ring-0
+                      border-transparent
+                      placeholder-gray-400)
                       sm:block
                     "
                     placeholder="Search all files"
@@ -273,7 +288,7 @@ export default {
                 </div>
               </form>
             </div>
-            <div class="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
+            <div class="ml-2 flex items-center space-x-4 sm:(ml-6 space-x-6)">
               <!-- Profile dropdown -->
               <Menu as="div" class="relative flex-shrink-0">
                 <MenuButton
@@ -282,7 +297,8 @@ export default {
                     rounded-full
                     flex
                     text-sm
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                    focus:(outline-none
+                    ring-2 ring-offset-2 ring-indigo-500)
                   "
                   @click="toggleProfile"
                 >
@@ -306,7 +322,8 @@ export default {
                   justify-center
                   text-white
                   hover:bg-indigo-700
-                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                  focus:(outline-none
+                  ring-2 ring-offset-2 ring-indigo-500)
                 "
               >
                 <PlusSmIconOutline class="h-6 w-6" aria-hidden="true" />

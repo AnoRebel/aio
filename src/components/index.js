@@ -17,6 +17,7 @@ import EmojiPicker from "@/components/EmojiPicker.vue";
 import PrivateChatHeader from "@/components/PrivateChatHeader.vue";
 import GroupChatHeader from "@/components/GroupChatHeader.vue";
 import SingleMessage from "@/components/SingleMessage.vue";
+import GroupMessage from "@/components/GroupMessage.vue";
 import GroupChat from "@/components/GroupChat.vue";
 import PrivateChat from "@/components/PrivateChat.vue";
 
@@ -40,6 +41,7 @@ export {
   PrivateChatHeader,
   GroupChatHeader,
   SingleMessage,
+  GroupMessage,
   GroupChat,
   PrivateChat,
 };

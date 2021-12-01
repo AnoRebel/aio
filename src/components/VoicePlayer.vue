@@ -93,7 +93,7 @@ export default {
 </script>
 
 <template>
-  <div class="relative ml-3 text-sm px-2 shadow rounded-2xl">
+  <div class="relative text-sm px-2">
     <audio ref="playerRef" :muted="muted" preload="metadata" class="hidden">
       <source :src="audio.src" :type="audio.type" />
       <a :href="audio.src" download>Download</a>

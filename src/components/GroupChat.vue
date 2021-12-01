@@ -1,412 +1,26 @@
 <script>
-import { GroupChatHeader } from "@/components";
+import { GroupChatHeader, GroupMessage } from "@/components";
+
+import { groupMessages } from "@/seed";
 
 export default {
-  components: { GroupChatHeader },
+  components: { GroupChatHeader, GroupMessage },
   setup() {
-    return {};
+    return { groupMessages };
   },
 };
 </script>
 
 <template>
   <!-- component -->
-  <div class="font-sans antialiased w-full h-[90%] flex-1 flex flex-col">
-    <!-- Top bar -->
+  <div class="font-sans antialiased w-full h-[90%] justify-between flex-1 flex flex-col">
     <!-- <GroupChatHeader /> -->
-    <!-- Chat messages -->
-    <div class="w-full px-6 py-4 flex-1 overflow-y-scroll">
+    <main id="messages" class="px-6 py-4 flex-1 overflow-y-auto scrollbar scrolling-touch">
       <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Steve Schoger</span>
-            <span class="text-grey text-xs">11:46</span>
-          </div>
-          <p class="text-black leading-normal">The slack from the other side.</p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Adam Wathan</span>
-            <span class="text-grey text-xs">12:45</span>
-          </div>
-          <p class="text-black leading-normal">
-            How are we supposed to control the marquee space without an utility for it? I propose
-            this:
-          </p>
-          <div
-            class="
-              bg-grey-lighter
-              border border-grey-light
-              text-grey-darkest text-sm
-              font-mono
-              rounded
-              p-3
-              mt-2
-              whitespace-pre
-              overflow-scroll
-            "
-          >
-            .marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeeder {
-            -webkit-marquee-speed: faster; }
-          </div>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">David Hemphill</span>
-            <span class="text-grey text-xs">12:46</span>
-          </div>
-          <p class="text-black leading-normal">
-            <a href="#" class="inline-block bg-blue-300 text-blue-600 no-underline">@Adam Wathan</a>
-            the size of the generated CSS is creating a singularity in space/time, we must stop
-            adding more utilities before it's too late!
-          </p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Steve Schoger</span>
-            <span class="text-grey text-xs">11:46</span>
-          </div>
-          <p class="text-black leading-normal">The slack from the other side.</p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Adam Wathan</span>
-            <span class="text-grey text-xs">12:45</span>
-          </div>
-          <p class="text-black leading-normal">
-            How are we supposed to control the marquee space without an utility for it? I propose
-            this:
-          </p>
-          <div
-            class="
-              bg-grey-lighter
-              border border-grey-light
-              text-grey-darkest text-sm
-              font-mono
-              rounded
-              p-3
-              mt-2
-              whitespace-pre
-              overflow-scroll
-            "
-          >
-            .marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeeder {
-            -webkit-marquee-speed: faster; }
-          </div>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">David Hemphill</span>
-            <span class="text-grey text-xs">12:46</span>
-          </div>
-          <p class="text-black leading-normal">
-            <a href="#" class="inline-block bg-blue-300 text-blue-600 no-underline">@Adam Wathan</a>
-            the size of the generated CSS is creating a singularity in space/time, we must stop
-            adding more utilities before it's too late!
-          </p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Steve Schoger</span>
-            <span class="text-grey text-xs">11:46</span>
-          </div>
-          <p class="text-black leading-normal">The slack from the other side.</p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Adam Wathan</span>
-            <span class="text-grey text-xs">12:45</span>
-          </div>
-          <p class="text-black leading-normal">
-            How are we supposed to control the marquee space without an utility for it? I propose
-            this:
-          </p>
-          <div
-            class="
-              bg-grey-lighter
-              border border-grey-light
-              text-grey-darkest text-sm
-              font-mono
-              rounded
-              p-3
-              mt-2
-              whitespace-pre
-              overflow-scroll
-            "
-          >
-            .marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeeder {
-            -webkit-marquee-speed: faster; }
-          </div>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">David Hemphill</span>
-            <span class="text-grey text-xs">12:46</span>
-          </div>
-          <p class="text-black leading-normal">
-            <a href="#" class="inline-block bg-blue-300 text-blue-600 no-underline">@Adam Wathan</a>
-            the size of the generated CSS is creating a singularity in space/time, we must stop
-            adding more utilities before it's too late!
-          </p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Steve Schoger</span>
-            <span class="text-grey text-xs">11:46</span>
-          </div>
-          <p class="text-black leading-normal">The slack from the other side.</p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Adam Wathan</span>
-            <span class="text-grey text-xs">12:45</span>
-          </div>
-          <p class="text-black leading-normal">
-            How are we supposed to control the marquee space without an utility for it? I propose
-            this:
-          </p>
-          <div
-            class="
-              bg-grey-lighter
-              border border-grey-light
-              text-grey-darkest text-sm
-              font-mono
-              rounded
-              p-3
-              mt-2
-              whitespace-pre
-              overflow-scroll
-            "
-          >
-            .marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeeder {
-            -webkit-marquee-speed: faster; }
-          </div>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">David Hemphill</span>
-            <span class="text-grey text-xs">12:46</span>
-          </div>
-          <p class="text-black leading-normal">
-            <a href="#" class="inline-block bg-blue-300 text-blue-600 no-underline">@Adam Wathan</a>
-            the size of the generated CSS is creating a singularity in space/time, we must stop
-            adding more utilities before it's too late!
-          </p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Steve Schoger</span>
-            <span class="text-grey text-xs">11:46</span>
-          </div>
-          <p class="text-black leading-normal">The slack from the other side.</p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Adam Wathan</span>
-            <span class="text-grey text-xs">12:45</span>
-          </div>
-          <p class="text-black leading-normal">
-            How are we supposed to control the marquee space without an utility for it? I propose
-            this:
-          </p>
-          <div
-            class="
-              bg-grey-lighter
-              border border-grey-light
-              text-grey-darkest text-sm
-              font-mono
-              rounded
-              p-3
-              mt-2
-              whitespace-pre
-              overflow-scroll
-            "
-          >
-            .marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeeder {
-            -webkit-marquee-speed: faster; }
-          </div>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">David Hemphill</span>
-            <span class="text-grey text-xs">12:46</span>
-          </div>
-          <p class="text-black leading-normal">
-            <a href="#" class="inline-block bg-blue-300 text-blue-600 no-underline">@Adam Wathan</a>
-            the size of the generated CSS is creating a singularity in space/time, we must stop
-            adding more utilities before it's too late!
-          </p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Steve Schoger</span>
-            <span class="text-grey text-xs">11:46</span>
-          </div>
-          <p class="text-black leading-normal">The slack from the other side.</p>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">Adam Wathan</span>
-            <span class="text-grey text-xs">12:45</span>
-          </div>
-          <p class="text-black leading-normal">
-            How are we supposed to control the marquee space without an utility for it? I propose
-            this:
-          </p>
-          <div
-            class="
-              bg-grey-lighter
-              border border-grey-light
-              text-grey-darkest text-sm
-              font-mono
-              rounded
-              p-3
-              mt-2
-              whitespace-pre
-              overflow-scroll
-            "
-          >
-            .marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeeder {
-            -webkit-marquee-speed: faster; }
-          </div>
-        </div>
-      </div>
-      <!-- A message -->
-      <div class="flex items-start mb-4 text-sm">
-        <img
-          src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-          class="w-10 h-10 rounded mr-3"
-        />
-        <div class="flex-1 overflow-hidden">
-          <div>
-            <span class="font-bold">David Hemphill</span>
-            <span class="text-grey text-xs">12:46</span>
-          </div>
-          <p class="text-black leading-normal">
-            <a href="#" class="inline-block bg-blue-300 text-blue-600 no-underline">@Adam Wathan</a>
-            the size of the generated CSS is creating a singularity in space/time, we must stop
-            adding more utilities before it's too late!
-          </p>
-        </div>
-      </div>
-    </div>
+      <template v-for="message in groupMessages" :key="message.id">
+        <GroupMessage :message="message" />
+      </template>
+    </main>
     <footer class="px-4 pt-3 pb-2">
       <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
@@ -616,3 +230,28 @@ export default {
     </div> -->
   </div>
 </template>
+
+<style lang="scss" scoped>
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(236, 236, 236, var(--tw-bg-opacity)) rgba(17, 24, 39, var(--tw-bg-opacity));
+}
+.scrollbar::-webkit-scrollbar {
+  cursor: pointer;
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  cursor: pointer;
+  background-color: #111827;
+  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  background-color: #ececec;
+  background-color: rgba(236, 236, 236, var(--tw-bg-opacity));
+}
+</style>
