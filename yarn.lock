@@ -5540,6 +5540,11 @@ vue-query@^1.13.0:
     react-query "^3.30.0"
     vue-demi "^0.10.1"
 
+vue-resizable@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/vue-resizable/-/vue-resizable-2.0.5.tgz#7e7fdae19e8cedbd332758d8886b95f445802653"
+  integrity sha512-AasULoGLeg87VFS07QpoR8q+U0saSlLVBhZy5wPKBl9L7YhmHVJ5Vng8mFpfnBbF2B7SujwPRTcRooz7/ntpqA==
+
 vue-router@^4.0.12:
   version "4.0.12"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.12.tgz#8dc792cddf5bb1abcc3908f9064136de7e13c460"
