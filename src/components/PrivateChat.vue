@@ -2,13 +2,13 @@
 import { onMounted } from "vue";
 import { InformationCircleIcon } from "@heroicons/vue/outline";
 
-import { SingleMessage, EmojiPicker, PrivateChatHeader, VoicePlayer } from "@/components";
+import { SingleMessage, EmojiPicker, PrivateChatHeader } from "@/components";
 import { emitter } from "@/utils";
 import { users, messages } from "@/seed";
 
 export default {
   name: "PrivateChat",
-  components: { EmojiPicker, InformationCircleIcon, SingleMessage, PrivateChatHeader, VoicePlayer },
+  components: { EmojiPicker, InformationCircleIcon, SingleMessage, PrivateChatHeader },
   setup() {
     onMounted(() => {
       const el = document.getElementById("messages");

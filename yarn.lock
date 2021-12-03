@@ -5010,6 +5010,11 @@ splitargs@0:
   resolved "https://registry.yarnpkg.com/splitargs/-/splitargs-0.0.7.tgz#fe9f7ae657371b33b10cb80da143cf8249cf6b3b"
   integrity sha1-/p965lc3GzOxDLgNoUPPgknPazs=
 
+splitpanes-esm@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/splitpanes-esm/-/splitpanes-esm-4.0.1.tgz#b292508d6b737e4c9f3c8b2d17c697cbacc5ae14"
+  integrity sha512-7prarqa36EcRldwjYxgTWzsktLlwxd1RdMUMDMNpeIHMlRDuGzB8nKeTCU64J/ymPmg/eof38DeV+nWAbaJxrQ==
+
 sshpk@^1.7.0:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.16.1.tgz#fb661c0bef29b39db40769ee39fa70093d6f6877"

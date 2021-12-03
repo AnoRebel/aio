@@ -85,6 +85,7 @@
     "rtcmulticonnection": "^3.7.0",
     "simple-signal-client": "^3.0.0",
     "socket.io-client": "^4.3.0",
+    "splitpanes-esm": "^4.0.1",
     "url-regex-safe": "^2.1.0",
     "vue": "^3.2.22",
     "vue-easy-lightbox": "^1.2.4",

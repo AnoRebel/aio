@@ -1,12 +1,24 @@
 <script>
-import { GroupChatHeader, GroupMessage } from "@/components";
+import { onMounted } from "vue";
 
+import { GroupChatHeader, EmojiPicker, GroupMessage } from "@/components";
+import { emitter } from "@/utils";
 import { groupMessages } from "@/seed";
 
 export default {
-  components: { GroupChatHeader, GroupMessage },
+  components: { GroupChatHeader, GroupMessage, EmojiPicker, },
   setup() {
-    return { groupMessages };
+    onMounted(() => {
+      const el = document.getElementById("messages");
+      el.scrollTop = el.scrollHeight;
+    });
+    const openEmoji = () => {
+      emitter.emit("openEmoji", true);
+    };
+    const setEmoji = e => {
+      console.log(e);
+    };
+    return { openEmoji, setEmoji, groupMessages };
   },
 };
 </script>

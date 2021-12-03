@@ -191,7 +191,7 @@ export const groupMessages = [
     sender: "Tony Stark",
     isSender: false,
     text: "...",
-    code: ".marquee-lightspeed { -webkit-marquee-speed: fast; }",
+    code: ".marquee-lightspeed { -webkit-marquee-speed: fast; } .marquee-lightspeed { -moz-marquee-speed: fast; }",
     linked_user: "Banners",
     date: "",
     image: {
