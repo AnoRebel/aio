@@ -61,6 +61,8 @@
     "@codemirror/tooltip": "^0.19.4",
     "@codemirror/view": "^0.19.9",
     "@nut-tree/nut-js": "^1.7.0",
+    "@tiptap/starter-kit": "^2.0.0-beta.150",
+    "@tiptap/vue-3": "^2.0.0-beta.82",
     "@vueuse/core": "^6.5.3",
     "@vueuse/integrations": "^6.5.3",
     "@webzlodimir/vue-bottom-sheet": "^1.3.0",

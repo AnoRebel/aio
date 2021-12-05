@@ -14,6 +14,7 @@ import SideImage from "@/components/SideImage.vue";
 import SideAddProject from "@/components/SideAddProject.vue";
 import PinCodeField from "@/components/PinCodeField.vue";
 import EmojiPicker from "@/components/EmojiPicker.vue";
+import { MenuBar } from "@/components/TipTap";
 import PrivateChatHeader from "@/components/PrivateChatHeader.vue";
 import GroupChatHeader from "@/components/GroupChatHeader.vue";
 import SingleMessage from "@/components/SingleMessage.vue";
@@ -38,6 +39,7 @@ export {
   SideImage,
   SideAddProject,
   EmojiPicker,
+  MenuBar,
   PrivateChatHeader,
   GroupChatHeader,
   SingleMessage,
