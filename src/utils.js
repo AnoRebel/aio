@@ -67,7 +67,7 @@ const nut_ex = async () => {
   await mouse.move(straightTo(slow));
 };
 
-export const countWords = doc => {
+const countWords = doc => {
   let count = 0,
     iter = doc.iter();
   while (!iter.next().done) {

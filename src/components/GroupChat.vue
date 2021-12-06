@@ -1,16 +1,45 @@
 <script>
 import { onMounted } from "vue";
+import { Editor, EditorContent, VueNodeViewRenderer } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
+import Highlight from "@tiptap/extension-highlight";
+import CharacterCount from "@tiptap/extension-character-count";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 
+import lowlight from "lowlight";
+
+import { CodeBlockComponent } from "@/components/TipTap";
 import { GroupChatHeader, EmojiPicker, GroupMessage } from "@/components";
 import { emitter } from "@/utils";
 import { groupMessages } from "@/seed";
 
 export default {
-  components: { GroupChatHeader, GroupMessage, EmojiPicker, },
+  components: { GroupChatHeader, GroupMessage, EmojiPicker },
   setup() {
+    const editor = ref(null);
     onMounted(() => {
       const el = document.getElementById("messages");
       el.scrollTop = el.scrollHeight;
+      editor.value = new Editor({
+        extensions: [
+          StarterKit.configure({
+            history: true,
+          }),
+          Highlight,
+          TaskList,
+          TaskItem,
+          CodeBlockLowlight.extend({
+            addNodeView() {
+              return VueNodeViewRenderer(CodeBlockComponent);
+            },
+          }).configure({ lowlight }),
+          CharacterCount.configure({
+            limit: 10000,
+          }),
+        ],
+      });
     });
     const openEmoji = () => {
       emitter.emit("openEmoji", true);
@@ -18,7 +47,7 @@ export default {
     const setEmoji = e => {
       console.log(e);
     };
-    return { openEmoji, setEmoji, groupMessages };
+    return { editor, openEmoji, setEmoji, groupMessages };
   },
 };
 </script>
@@ -34,6 +63,8 @@ export default {
       </template>
     </main>
     <footer class="px-4 pt-3 pb-2">
+      <!-- <menu-bar class="editor__header" :editor="editor" />
+      <editor-content class="editor__content" :editor="editor" /> -->
       <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
           <button
@@ -265,5 +296,137 @@ export default {
   border-radius: 0.5rem;
   background-color: #ececec;
   background-color: rgba(236, 236, 236, var(--tw-bg-opacity));
+}
+
+.ProseMirror {
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #616161;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-attribute,
+    .hljs-tag,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-link,
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: #f98181;
+    }
+
+    .hljs-number,
+    .hljs-meta,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-literal,
+    .hljs-type,
+    .hljs-params {
+      color: #fbbc88;
+    }
+
+    .hljs-string,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #b9f18d;
+    }
+
+    .hljs-title,
+    .hljs-section {
+      color: #faf594;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #70cff8;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: 700;
+    }
+  }
+
+  mark {
+    background-color: #faf594;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
+  ul[data-type="taskList"] {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+
+      > label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+
+      > div {
+        flex: 1 1 auto;
+      }
+    }
+  }
+}
+.editor {
+  display: flex;
+  flex-direction: column;
+  max-height: 26rem;
+  color: #0d0d0d;
+  background-color: #fff;
+  border: 3px solid #0d0d0d;
+  border-radius: 0.75rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    padding: 0.25rem;
+    border-bottom: 3px solid #0d0d0d;
+  }
+
+  &__content {
+    padding: 1.25rem 1rem;
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 </style>

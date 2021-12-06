@@ -1,22 +1,17 @@
-<template>
-  <div ref="cmRef" />
-</template>
-
 <script>
-import { ref, onBeforeUnmount } from "vue";
-import { EditorView } from "@codemirror/view";
-import { EditorState, keymap } from "@codemirror/state";
+import { onMounted, ref, onBeforeUnmount } from "vue";
+import { basicSetup } from "@codemirror/basic-setup";
+import { EditorView, keymap } from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
 import { indentOnInput } from "@codemirror/language";
-import { defaultKeymap } from "@codemirror/commands";
-import { history, historyKeymap } from "@codemirror/history";
-// import {} from "@codemirror/lint";
-// import {} from "@codemirror/comment";
 // import {} from "@codemirror/legacy-modes";
-import { lineNumbers, highlightActiveLineGutter } from "@codemirror/gutter";
-import { bracketMatching } from "@codemirror/matchbrackets";
-import { defaultHighlightStyle } from "@codemirror/highlight";
+import { language } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
-import { Panel, ShowPanel } from "@codemirror/panel";
+import { showPanel } from "@codemirror/panel";
+import { indentWithTab } from "@codemirror/commands";
+import { gutter, GutterMarker } from "@codemirror/gutter";
+
+import { wordCountPanel } from "@/utils";
 
 export default {
   name: "VCodeMirror",
@@ -31,34 +26,33 @@ export default {
   },
   setup(props) {
     const cmRef = ref(null);
+    const cm = ref(null);
 
-    const wordCounter = () => showPanel.of(wordCountPanel());
+    const wordCounter = () => showPanel.of(wordCountPanel);
 
     const initialState = EditorState.create({
       doc: props.initialDoc,
       extensions: [
-        keymap.of([...defaultKeymap, ...historyKeymap]),
-        lineNumbers(),
-        history(),
+        basicSetup,
         indentOnInput(),
-        bracketMatching(),
-        defaultHighlightStyle.fallback,
-        highlightActiveLineGutter(),
         EditorView.lineWrapping,
         EditorView.updateListener.of(update => {
           if (update.changes) {
-            onChange && onChange(update.state);
+            props.onChange && props.onChange(update.state);
           }
         }),
+        wordCounter(),
       ],
     });
 
-    const cm = ref(
-      new EditorView({
-        parent: cmRef.value,
-        state: initialState,
-      })
-    );
+    onMounted(() => {
+      cm.value = ref(
+        new EditorView({
+          parent: cmRef.value,
+          state: initialState,
+        })
+      );
+    });
 
     onBeforeUnmount(() => {});
 
@@ -66,3 +60,7 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div ref="cmRef" />
+</template>
