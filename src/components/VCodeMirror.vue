@@ -1,23 +1,24 @@
 <script>
-import { onMounted, ref, onBeforeUnmount } from "vue";
+import { onMounted, ref, reactive, computed, onBeforeUnmount } from "vue";
 import { basicSetup } from "@codemirror/basic-setup";
 import { EditorView, keymap } from "@codemirror/view";
 import { EditorState, StateField, StateEffect, Compartment } from "@codemirror/state";
 import { indentOnInput, language } from "@codemirror/language";
-// import { languages } from "@codemirror/language-data";
 import { showPanel } from "@codemirror/panel";
 import { indentWithTab } from "@codemirror/commands";
 import { RangeSet } from "@codemirror/rangeset";
 import { gutter, GutterMarker } from "@codemirror/gutter";
-import { oneDark } from "@codemirror/theme-one-dark";
-import { javascript } from "@codemirror/lang-javascript";
+import VueSelect from "vue-select";
 import { findIndex } from "lodash-es";
 
 import { themeOptions, languageOptions } from "@/assets/js/options";
-import { filenamePanel, wordCountPanel } from "@/utils";
+import { countWords } from "@/utils";
+import { useCodeStore } from "@/store";
+import { BaseCenterModal, BaseTopModal } from "@/components";
 
 export default {
   name: "VCodeMirror",
+  components: { VueSelect, BaseCenterModal, BaseTopModal },
   props: {
     initialDoc: {
       type: String,
@@ -30,12 +31,24 @@ export default {
   setup(props) {
     const cmRef = ref(null);
     const cm = ref(null);
-    let languageConf = new Compartment(),
-      tabSize = new Compartment(),
-      themeConf = new Compartment();
-
-    const wordCounter = () => showPanel.of(wordCountPanel);
-    const filename = () => showPanel.of(filenamePanel);
+    const codeStore = useCodeStore();
+    const code = reactive({
+      data: "",
+      theme: computed({
+        get: () => codeStore.getTheme,
+        set: val => setTheme(val),
+      }),
+      language: computed({
+        get: () => codeStore.getLanguage,
+        set: val => setLanguage(val),
+      }),
+    });
+    const modals = reactive({
+      name: false,
+      tabs: false,
+      language: false,
+      theme: false,
+    });
 
     onMounted(() => {
       cm.value = new EditorView({
@@ -43,6 +56,73 @@ export default {
         state: initialState,
       });
     });
+
+    const bottomPanelMaker = view => {
+      let dom = document.createElement("div");
+      // Flex divs
+      let ldiv = document.createElement("div");
+      let rdiv = document.createElement("div");
+      // Language element
+      let lng = document.createElement("div");
+      // Word Count element
+      let wc = document.createElement("div");
+      // Theme element
+      let tm = document.createElement("div");
+      // Tab Size element
+      let tab = document.createElement("div");
+      // Adding classes
+      ldiv.classList.add("flex", "flex-row", "flex-shrink-0");
+      rdiv.classList.add("flex", "flex-row", "flex-shrink-0");
+      dom.classList.add("flex", "flex-row", "justify-between", "items-center");
+      wc.classList.add("text-sm", "p-1", "cursor-default");
+      lng.classList.add("text-sm", "cursor-pointer", "hover:bg-gray-500", "p-1");
+      tab.classList.add("text-sm", "cursor-pointer", "hover:bg-gray-500", "p-1", "mx-2");
+      tm.classList.add("text-sm", "cursor-pointer", "hover:bg-gray-500", "p-1", "mx-2");
+      // Adding content
+      wc.textContent = countWords(view.state.doc);
+      tab.textContent = `Spaces: ${view.state.tabSize}`;
+      lng.textContent = codeStore.getLanguage;
+      tm.textContent = codeStore.getTheme;
+      // Adding Event listeners
+      tab.onclick = () => (modals.tabs = true);
+      tm.onclick = () => (modals.theme = true);
+      lng.onclick = () => (modals.language = true);
+      // Appending to DOM
+      ldiv.appendChild(wc);
+      ldiv.appendChild(tab);
+      rdiv.appendChild(tm);
+      rdiv.appendChild(lng);
+      dom.appendChild(ldiv);
+      dom.appendChild(rdiv);
+      return {
+        dom,
+        update(update) {
+          if (update.docChanged) {
+            wc.textContent = countWords(update.state.doc);
+            tab.textContent = `Spaces: ${update.state.tabSize}`;
+            lng.textContent = codeStore.getLanguage;
+            tm.textContent = codeStore.getTheme;
+          }
+        },
+      };
+    };
+
+    const topPanelMaker = view => {
+      let dom = document.createElement("div");
+      dom.classList.add("text-sm", "italic", "px-2", "py-1", "cursor-pointer");
+      dom.textContent = codeStore.getFilename;
+      dom.onclick = () => (modals.name = true);
+      return {
+        top: true,
+        dom,
+        update(update) {
+          if (update.docChanged) dom.textContent = codeStore.getFilename;
+        },
+      };
+    };
+
+    const topPanel = () => showPanel.of(topPanelMaker);
+    const bottomPanel = () => showPanel.of(bottomPanelMaker);
 
     const emptyMarker = new (class extends GutterMarker {
       toDOM() {
@@ -52,7 +132,8 @@ export default {
 
     const breakpointMarker = new (class extends GutterMarker {
       toDOM() {
-        return document.createTextNode("💔");
+        // return document.createTextNode("💔");
+        return document.createTextNode("★");
       }
     })();
 
@@ -116,6 +197,17 @@ export default {
       }),
     ];
 
+    let languageConf = new Compartment(),
+      tabSize = new Compartment(),
+      themeConf = new Compartment(),
+      initTheme = themeOptions[findIndex(themeOptions, o => o.label == codeStore.getTheme)].value,
+      initLanguage =
+        typeof languageOptions[findIndex(languageOptions, o => o.label == codeStore.getLanguage)]
+          .value == "object"
+          ? languageOptions[findIndex(languageOptions, o => o.label == codeStore.getLanguage)].value
+          : languageOptions[
+              findIndex(languageOptions, o => o.label == codeStore.getLanguage)
+            ].value();
     const initialState = EditorState.create({
       doc: props.initialDoc,
       extensions: [
@@ -124,84 +216,139 @@ export default {
           ".cm-scroller": { minHeight: "80vh" },
         }),
         tabSize.of(EditorState.tabSize.of(4)),
-        languageConf.of(javascript()),
-        themeConf.of(oneDark),
+        languageConf.of(initLanguage),
+        themeConf.of(initTheme),
         indentOnInput(),
         keymap.of([indentWithTab]),
         EditorView.lineWrapping,
+        breakpointGutter,
+        emptyLineGutter,
+        topPanel(),
+        bottomPanel(),
         EditorView.updateListener.of(update => {
           if (update.changes) {
             props.onChange && props.onChange(update.state);
           }
         }),
-        filename(),
-        wordCounter(),
-        breakpointGutter,
-        emptyLineGutter,
       ],
     });
 
-    const setTheme = ev => {
-      let el = ev.target;
-      let index = findIndex(themeOptions, o => o.label == el.options[el.selectedIndex].value);
+    const setTheme = label => {
+      console.log(label);
+      let index = findIndex(themeOptions, o => o.label == label);
       let theme = themeOptions[index].value;
+      codeStore.setTheme(label);
 
       cm.value.dispatch({
         effects: themeConf.reconfigure(theme),
       });
     };
 
-    const setLanguage = ev => {
-      let el = ev.target;
-      let index = findIndex(languageOptions, o => o.label == el.options[el.selectedIndex].value);
+    const setLanguage = label => {
+      let index = findIndex(languageOptions, o => o.label == label);
       let language = languageOptions[index].value;
+      codeStore.setLanguage(label);
 
       cm.value.dispatch({
         effects: languageConf.reconfigure(typeof language == "object" ? language : language()),
       });
     };
 
+    const log = ev => console.log(ev);
+
+    // watch(code, (newCode, oldCode) => {
+    //   // if (newCode.data != oldCode.data) {
+    //   //   cm.value.dispatch({
+    //   //     changes: { from: 0, to: cm.value.state.doc.length, insert: newCode.data },
+    //   //   });
+    //   // };
+    // });
+
     onBeforeUnmount(() => {
       cm.value.destroy();
     });
 
-    return { cmRef, setTheme, setLanguage, themeOptions, languageOptions };
+    return { cmRef, setTheme, setLanguage, themeOptions, languageOptions, code, modals };
   },
 };
 </script>
 
 <template>
-  <div class="flex justify-between">
-    <select class="bg-gray-900 text-white px-4 py-1 rounded-sm" @change="setTheme">
-      <option class="p-1 text-base" value="One Dark">One Dark</option>
-      <option
-        class="p-1 text-base"
-        v-for="theme in themeOptions"
-        :value="theme.label"
-        :key="theme.label"
-      >
-        {{ theme.label }}
-      </option>
-    </select>
-    <select class="bg-gray-900 text-white px-4 py-1 rounded-sm" @change="setLanguage">
-      <option class="p-1 text-base" value="Javascript/TypeScript">Javascript/TypeScript</option>
-      <option
-        class="p-1 text-base"
-        v-for="lang in languageOptions"
-        :value="lang.label"
-        :key="lang.label"
-      >
-        {{ lang.label }}
-      </option>
-    </select>
-  </div>
+  <!-- <div class="flex justify-between">
+    <VueSelect
+      v-model="code.language"
+      :options="languageOptions"
+      :reduce="lang => lang.label"
+      :getOptionKey="lang => lang.label"
+    />
+    <VueSelect
+      v-model="code.theme"
+      :options="themeOptions"
+      :reduce="theme => theme.label"
+      :getOptionKey="theme => theme.label"
+    />
+  </div> -->
 
   <div ref="cmRef" />
+  <div v-if="modals.name">
+    <BaseTopModal @close="modals.name = false">
+      <input class="form-control rounded p-1" type="text" name="filename" />
+    </BaseTopModal>
+  </div>
+  <div v-if="modals.tabs">
+    <BaseTopModal @close="modals.tabs = false">
+      <input class="form-control rounded p-1" type="number" name="tab" />
+    </BaseTopModal>
+  </div>
+  <div v-if="modals.theme">
+    <BaseTopModal @close="modals.theme = false">
+      <VueSelect
+        v-model="code.theme"
+        :options="themeOptions"
+        :reduce="theme => theme.label"
+        :getOptionKey="theme => theme.label"
+      />
+    </BaseTopModal>
+  </div>
+  <div v-if="modals.language">
+    <BaseTopModal @close="modals.language = false">
+      <VueSelect
+        v-model="code.language"
+        :options="languageOptions"
+        :reduce="lang => lang.label"
+        :getOptionKey="lang => lang.label"
+      />
+    </BaseTopModal>
+  </div>
 </template>
 
 <style lang="scss">
+@import "vue-select/src/scss/vue-select.scss";
 // .cm-scroller {
 //   // @apply rounded;
 //   min-height: 40vh;
 // }
+.vs__search {
+  @apply py-1 px-2 bg-transparent border-none !important;
+}
+.vs__dropdown-toggle {
+  @apply min-w-[12rem];
+}
+
+.vs__search::placeholder,
+.vs__dropdown-toggle,
+.vs__dropdown-menu {
+  background: #dfe5fb;
+  border: none;
+  color: #394066;
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+.vs__open-indicator {
+  @apply cursor-pointer;
+}
+.vs__clear,
+.vs__open-indicator {
+  fill: #394066;
+}
 </style>

@@ -37,6 +37,7 @@ const languageOptions = [
   { value: languages.fortranLang, label: "Fortran" },
   { value: languages.fSharpLang, label: "F#" },
   { value: languages.goLang, label: "Go" },
+  { value: languages.GQL, label: "GraphQL" },
   { value: languages.groovyLang, label: "Groovy" },
   { value: languages.haskellLang, label: "Haskell" },
   { value: languages.haxeLang, label: "Haxe" },

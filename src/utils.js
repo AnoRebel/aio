@@ -9,7 +9,7 @@ export const emitter = mitt();
 let _SOCKET = null,
   _SignalClient = null;
 
-const countWords = doc => {
+export const countWords = doc => {
   let count = 0,
     iter = doc.iter();
   while (!iter.next().done) {
@@ -21,32 +21,6 @@ const countWords = doc => {
     }
   }
   return `wc: ${count}`;
-};
-
-export const wordCountPanel = view => {
-  let dom = document.createElement("div");
-  dom.classList.add("text-sm");
-  dom.textContent = countWords(view.state.doc);
-  return {
-    dom,
-    update(update) {
-      if (update.docChanged) dom.textContent = countWords(update.state.doc);
-    },
-  };
-};
-
-export const filenamePanel = view => {
-  let dom = document.createElement("div");
-  dom.classList.add("text-sm", "italic", "px-2", "py-1");
-  dom.textContent = `Filename: ${view.state.doc.name ? view.state.doc.name : "Untitled"}`;
-  // dom.onclick = () => window.prompt("Rename this file");
-  return {
-    top: true,
-    dom,
-    update(update) {
-      if (update.docChanged) dom.textContent = `Filename: ${view.state.doc.name}`;
-    },
-  };
 };
 
 export const createSocket = () => {

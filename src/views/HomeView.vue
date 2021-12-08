@@ -2,11 +2,11 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { BaseLayout, SideBarLayout, ChatLayout, GalleryLayout } from "@/layouts";
-import { KanbanBoard, PrivateChat, GroupChat, MenuBar } from "@/components";
+import { KanbanBoard, PrivateChat, GroupChat, MenuBar, VCodeMirror } from "@/components";
 import { Splitpanes, Pane } from "splitpanes-esm";
 import "splitpanes-esm/dist/splitpanes.css";
 
-import VCodeMirror from "@/components/VCodeMirror.vue";
+const log = data => console.log(data.doc.text, data.doc.toString());
 </script>
 
 <template>
@@ -22,7 +22,7 @@ import VCodeMirror from "@/components/VCodeMirror.vue";
       </pane>
     </splitpanes>
   </div>
-  <VCodeMirror initialDoc="Hi there" :onChange="() => {}" />
+  <VCodeMirror initialDoc="Hi there" :onChange="log" />
 </template>
 
 <style lang="scss">

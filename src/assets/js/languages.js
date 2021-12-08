@@ -9,6 +9,7 @@ import { markdown } from "@codemirror/lang-markdown";
 import { lezer } from "@codemirror/lang-lezer";
 import { rust } from "@codemirror/lang-rust";
 import { python } from "@codemirror/lang-python";
+import { GQL } from "@restbox/graphql";
 import {
   sql,
   Cassandra,
@@ -140,6 +141,7 @@ export {
   javascript,
   css,
   java,
+  GQL,
   php,
   markdown,
   lezer,

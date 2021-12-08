@@ -4,7 +4,9 @@ import Controls from "@/components/Controls.vue";
 import VoicePlayer from "@/components/VoicePlayer.vue";
 import AudioPlayer from "@/components/AudioPlayer.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
-// import VCodeMirror from "@/components/VCodeMirror.vue";
+import BaseTopModal from "@/components/BaseTopModal.vue";
+import BaseCenterModal from "@/components/BaseCenterModal.vue";
+import VCodeMirror from "@/components/VCodeMirror.vue";
 import SideBarLink from "@/components/SideBarLink.vue";
 import SideBarFooter from "@/components/SideBarFooter.vue";
 import KanbanBoard from "@/components/KanbanBoard.vue";
@@ -30,7 +32,9 @@ export {
   VoicePlayer,
   AudioPlayer,
   VideoPlayer,
-  // VCodeMirror,
+  BaseTopModal,
+  BaseCenterModal,
+  VCodeMirror,
   SideBarLink,
   SideBarFooter,
   KanbanBoard,
