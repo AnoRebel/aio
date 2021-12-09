@@ -42,6 +42,14 @@ export default {
         get: () => codeStore.getLanguage,
         set: val => setLanguage(val),
       }),
+      tabSize: computed({
+        get: () => codeStore.getTabsize,
+        set: val => setTabsize(val),
+      }),
+      filename: computed({
+        get: () => codeStore.getFilename,
+        set: val => setFilename(val),
+      }),
     });
     const modals = reactive({
       name: false,
@@ -81,8 +89,8 @@ export default {
       // Adding content
       wc.textContent = countWords(view.state.doc);
       tab.textContent = `Spaces: ${view.state.tabSize}`;
-      lng.textContent = codeStore.getLanguage;
-      tm.textContent = codeStore.getTheme;
+      lng.textContent = code.language;
+      tm.textContent = code.theme;
       // Adding Event listeners
       tab.onclick = () => (modals.tabs = true);
       tm.onclick = () => (modals.theme = true);
@@ -100,8 +108,8 @@ export default {
           if (update.docChanged) {
             wc.textContent = countWords(update.state.doc);
             tab.textContent = `Spaces: ${update.state.tabSize}`;
-            lng.textContent = codeStore.getLanguage;
-            tm.textContent = codeStore.getTheme;
+            lng.textContent = code.language;
+            tm.textContent = code.theme;
           }
         },
       };
@@ -109,14 +117,22 @@ export default {
 
     const topPanelMaker = view => {
       let dom = document.createElement("div");
-      dom.classList.add("text-sm", "italic", "px-2", "py-1", "cursor-pointer");
-      dom.textContent = codeStore.getFilename;
+      dom.classList.add(
+        "text-sm",
+        "italic",
+        "px-2",
+        "py-1",
+        "cursor-pointer",
+        "bg-gray-900",
+        "w-30"
+      );
+      dom.textContent = code.filename;
       dom.onclick = () => (modals.name = true);
       return {
         top: true,
         dom,
         update(update) {
-          if (update.docChanged) dom.textContent = codeStore.getFilename;
+          if (update.docChanged) dom.textContent = code.filename;
         },
       };
     };
@@ -234,7 +250,6 @@ export default {
     });
 
     const setTheme = label => {
-      console.log(label);
       let index = findIndex(themeOptions, o => o.label == label);
       let theme = themeOptions[index].value;
       codeStore.setTheme(label);
@@ -252,6 +267,17 @@ export default {
       cm.value.dispatch({
         effects: languageConf.reconfigure(typeof language == "object" ? language : language()),
       });
+    };
+
+    const setTabsize = size => {
+      cm.value.dispatch({
+        effects: tabSize.reconfigure(EditorState.tabSize.of(size)),
+      });
+      codeStore.setTabsize(size);
+    };
+
+    const setFilename = name => {
+      codeStore.setFilename(name);
     };
 
     const log = ev => console.log(ev);
@@ -292,12 +318,23 @@ export default {
   <div ref="cmRef" />
   <div v-if="modals.name">
     <BaseTopModal @close="modals.name = false">
-      <input class="form-control rounded p-1" type="text" name="filename" />
+      <form class="flex flex-col items-start" @submit.prevent="modals.name = false">
+        <label for="filename" class="text-sm text-white">Filename:</label>
+        <input
+          v-model="code.filename"
+          class="form-control rounded p-1"
+          type="text"
+          name="filename"
+        />
+      </form>
     </BaseTopModal>
   </div>
   <div v-if="modals.tabs">
     <BaseTopModal @close="modals.tabs = false">
-      <input class="form-control rounded p-1" type="number" name="tab" />
+      <form class="flex flex-col items-start" @submit.prevent="modals.tabs = false">
+        <label for="tab" class="text-sm text-white">Tab Size:</label>
+        <input v-model="code.tabSize" class="form-control rounded px-2 py-1" type="number" name="tab" />
+      </form>
     </BaseTopModal>
   </div>
   <div v-if="modals.theme">

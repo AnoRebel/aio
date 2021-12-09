@@ -760,10 +760,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tiptap/core@^2.0.0-beta.150":
-  version "2.0.0-beta.150"
-  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.150.tgz#7a0e3c36166667c92ef3747ac0952e541bfe1eb0"
-  integrity sha512-uc73pfoC0BaRCte17Yjjzq+7yW4RRyjsprcN81rlehTjHHf1T5Mv2tt0D6rQpXElUwBo8MjzTA9u9UB8K2qcIw==
+"@tiptap/core@^2.0.0-beta.151":
+  version "2.0.0-beta.151"
+  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.151.tgz#9cb1f60372d0b18203b6644552c0e8f2c0dcb421"
+  integrity sha512-iESGJZj2GeZmgDsG2fg24pm1SGsWeXGoi6Hd7YWTc7Kl6QNfOZOtuekCKEbQl9ZyJv49eTxlS9OWuOp/mS5Xiw==
   dependencies:
     "@types/prosemirror-commands" "^1.0.4"
     "@types/prosemirror-keymap" "^1.0.4"
@@ -805,9 +805,9 @@
   integrity sha512-Bn0zh+W51oWUFVXgrq6ei9ll5r0UKq8OMQCVi91y3DfJpKV3DeyG/hN1cpxNI8uzQN15UhDfTYRRXq+WhXKLFQ==
 
 "@tiptap/extension-character-count@^2.0.0-beta.18":
-  version "2.0.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-character-count/-/extension-character-count-2.0.0-beta.18.tgz#c73487f2096db0c9952941578feaf424425f1374"
-  integrity sha512-Fa+wQVww9Ea7b5/hs3ywjsRsfPeSxO/1NNiZ2rED5J5l0xg20/5H/SRtlVia2x3dt928Ss1W4z/FBabPCgRNsQ==
+  version "2.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-character-count/-/extension-character-count-2.0.0-beta.19.tgz#317560a6bec070e72f36e24234627a9bd167e977"
+  integrity sha512-KzB9etTshgPH3oJwuxBFIETBvZs1GMnIJRFAuvGjec5fQH2MrhWLYVdPz/cgowxVFkzXZXcnBYH73bcQysunrg==
 
 "@tiptap/extension-code-block-lowlight@^2.0.0-beta.60":
   version "2.0.0-beta.60"
@@ -989,20 +989,20 @@
   integrity sha512-c+tOv4CRBG2pgtAACEsDwvbmM8C89M/CeelTcLLu8zrk+PRy7yj8DKLUtcb9Ybsa7f1Suk6iqyj3dkfxuuvDLw==
 
 "@tiptap/html@^2.0.0-beta.149":
-  version "2.0.0-beta.149"
-  resolved "https://registry.yarnpkg.com/@tiptap/html/-/html-2.0.0-beta.149.tgz#4ed88fa3ccfd35a22ef8c4eedd71948f9c7693d6"
-  integrity sha512-0sfFsCr5wUPpIuDVWu4y+9calkirE7FTYwW12/AzcT8WT6JEULJna5TAMqIEE5ozOUoeyfvgDTKnn3fRzfbN5Q==
+  version "2.0.0-beta.150"
+  resolved "https://registry.yarnpkg.com/@tiptap/html/-/html-2.0.0-beta.150.tgz#d05d3f16d494120b81e6042d7d76c23712279dda"
+  integrity sha512-hLwmO+tZMdKDTy4pf+Xd53cyQmVXX2htI+bxw+owKZ2ddYNWfF6wy2H2uGPoRT5mwcUJ+IZ/OW1w8KGLJ7gCRg==
   dependencies:
-    "@tiptap/core" "^2.0.0-beta.150"
+    "@tiptap/core" "^2.0.0-beta.151"
     prosemirror-model "^1.15.0"
     zeed-dom "^0.9.19"
 
 "@tiptap/starter-kit@^2.0.0-beta.150":
-  version "2.0.0-beta.153"
-  resolved "https://registry.yarnpkg.com/@tiptap/starter-kit/-/starter-kit-2.0.0-beta.153.tgz#3a317e5cc932a0e92650cee456f9084d5561a669"
-  integrity sha512-y1vQ5mZEdV/E9URcRHI7n3CuBrtMJZcnU4Qb/Wty29LC3Fek36YH12aiaS5n8hIHWvvWVTEpPTNk6ODpRslxvg==
+  version "2.0.0-beta.154"
+  resolved "https://registry.yarnpkg.com/@tiptap/starter-kit/-/starter-kit-2.0.0-beta.154.tgz#e7606eb39b581bc854801752e4c945bb1e802bbf"
+  integrity sha512-OinSuOeF9+x9FvRUFQ7b6pCOJj0F8+zBBFaqp8Sd7NenBg4uyp+frvaFxqjKdzTH19iAghYO13gVphuVi3Gizg==
   dependencies:
-    "@tiptap/core" "^2.0.0-beta.150"
+    "@tiptap/core" "^2.0.0-beta.151"
     "@tiptap/extension-blockquote" "^2.0.0-beta.26"
     "@tiptap/extension-bold" "^2.0.0-beta.25"
     "@tiptap/extension-bullet-list" "^2.0.0-beta.24"

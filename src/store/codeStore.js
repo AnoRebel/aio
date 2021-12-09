@@ -7,9 +7,13 @@ const useCodeStore = defineStore("code", {
     data: "",
     filename: "Untitled",
     theme: "One Dark",
+    tabSize: 4,
     language: "Javascript/TypeScript",
   }),
   actions: {
+    setCode(code) {
+        this.data = code;
+    },
     setTheme(theme) {
       this.theme = theme;
     },
@@ -19,11 +23,15 @@ const useCodeStore = defineStore("code", {
     setFilename(name) {
       this.filename = name;
     },
+    setTabsize(size) {
+        this.tabSize = size
+    },
   },
   getters: {
     getCode: state => state.data,
     getTheme: state => state.theme,
     getLanguage: state => state.language,
+    getTabsize: state => state.tabSize,
     getFilename: state => state.filename,
   },
 });
