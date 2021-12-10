@@ -22,7 +22,9 @@ const log = data => console.log(data);
       </pane>
     </splitpanes>
   </div>
-  <VCodeMirror initialDoc="Hi there" :onChange="log" />
+  <ChatLayout>
+    <GroupChat />
+  </ChatLayout>
 </template>
 
 <style lang="scss">

@@ -1,5 +1,5 @@
 <script>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { Editor, EditorContent, VueNodeViewRenderer } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import TaskList from "@tiptap/extension-task-list";
@@ -63,8 +63,8 @@ export default {
       </template>
     </main>
     <footer class="px-4 pt-3 pb-2">
-      <!-- <menu-bar class="editor__header" :editor="editor" />
-      <editor-content class="editor__content" :editor="editor" /> -->
+      <menu-bar class="editor__header" :editor="editor" />
+      <editor-content class="editor__content" :editor="editor" />
       <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
           <button
