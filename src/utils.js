@@ -3,8 +3,33 @@ const SimpleSignalClient = require("simple-signal-client");
 // import SimpleSignalClient from "simple-signal-client";
 import mitt from "mitt";
 import io from "socket.io-client";
+import { debounce } from "lodash-es";
 
 export const emitter = mitt();
+
+export const piniaLogger = ({ store }) => {
+  store.$subscribe((mutation, state) => {
+    let mut = `{"store": ${mutation.storeId}, "type": ${mutation.type}, "payload": ${mutation.payload}}`;
+
+    console.log(JSON.parse(JSON.stringify(mut)));
+  });
+  store.$onAction(action => {
+    let act = `{"store": ${action.store.$id}, "action": ${action.name}, "payload": ${action.args}}`;
+
+    console.log(JSON.parse(JSON.stringify(act)));
+  });
+};
+
+export const piniaDebounce = ({ options, store }) => {
+  console.log(options);
+  if (options.debounce) {
+    // we are overriding the actions with new ones
+    return Object.keys(options.debounce).reduce((debouncedActions, action) => {
+      debouncedActions[action] = debounce(store[action], options.debounce[action]);
+      return debouncedActions;
+    }, {});
+  }
+};
 
 let _SOCKET = null,
   _SignalClient = null;

@@ -6,7 +6,7 @@ import { KanbanBoard, PrivateChat, GroupChat, MenuBar, VCodeMirror } from "@/com
 import { Splitpanes, Pane } from "splitpanes-esm";
 import "splitpanes-esm/dist/splitpanes.css";
 
-const log = data => console.log(data.doc.text, data.doc.toString());
+const log = data => console.log(data);
 </script>
 
 <template>

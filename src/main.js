@@ -6,6 +6,7 @@ import App from "@/App.vue";
 import { AppLink } from "@/components";
 import router from "@/router";
 import "virtual:windi.css";
+import { piniaLogger, piniaDebounce } from "@/utils";
 import "@/assets/scss/style.scss";
 
 const i18n = createI18n({
@@ -16,6 +17,8 @@ const i18n = createI18n({
 });
 
 const pinia = createPinia();
+pinia.use(piniaLogger);
+pinia.use(piniaDebounce);
 
 const app = createApp(App);
 app.component("AppLink", AppLink);

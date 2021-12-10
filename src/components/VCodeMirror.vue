@@ -244,6 +244,7 @@ export default {
         EditorView.updateListener.of(update => {
           if (update.changes) {
             props.onChange && props.onChange(update.state);
+            codeStore.setCode(update.state.doc.text);
           }
         }),
       ],
@@ -333,7 +334,12 @@ export default {
     <BaseTopModal @close="modals.tabs = false">
       <form class="flex flex-col items-start" @submit.prevent="modals.tabs = false">
         <label for="tab" class="text-sm text-white">Tab Size:</label>
-        <input v-model="code.tabSize" class="form-control rounded px-2 py-1" type="number" name="tab" />
+        <input
+          v-model="code.tabSize"
+          class="form-control rounded px-2 py-1"
+          type="number"
+          name="tab"
+        />
       </form>
     </BaseTopModal>
   </div>

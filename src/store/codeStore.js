@@ -12,7 +12,7 @@ const useCodeStore = defineStore("code", {
   }),
   actions: {
     setCode(code) {
-        this.data = code;
+      this.data = code;
     },
     setTheme(theme) {
       this.theme = theme;
@@ -24,7 +24,7 @@ const useCodeStore = defineStore("code", {
       this.filename = name;
     },
     setTabsize(size) {
-        this.tabSize = size
+      this.tabSize = size;
     },
   },
   getters: {
@@ -33,6 +33,9 @@ const useCodeStore = defineStore("code", {
     getLanguage: state => state.language,
     getTabsize: state => state.tabSize,
     getFilename: state => state.filename,
+  },
+  debounce: {
+    setCode: 500,
   },
 });
 
