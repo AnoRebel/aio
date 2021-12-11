@@ -1,12 +1,16 @@
 <script>
 import { ref } from "vue";
 
+import { EmojiPicker } from "@/components";
 import { MenuItem } from "@/components/TipTap";
+
+import { emitter } from "@/utils";
 
 export default {
   name: "MenuBar",
   components: {
     MenuItem,
+    EmojiPicker,
   },
   props: {
     editor: {
@@ -15,6 +19,24 @@ export default {
     },
   },
   setup(props) {
+    const toggleLink = () => {
+      const previousUrl = props.editor.getAttributes("link").href;
+      const currentUrl = props.editor.view.state.selection;
+      // If there is a link, remove it
+      // https://prosemirror.net/docs/ref/#state.Selection
+      // https://prosemirror.net/docs/ref/#model.Slice
+      // https://prosemirror.net/docs/ref/#model.Fragment
+      console.log(previousUrl, currentUrl);
+      console.log(props.editor.chain().focus().toggleLink().run());
+      // if (previousUrl === "" || previousUrl === null) {
+      //   props.editor.chain().focus().extendMarkRange("link").setLink({ href: "url" }).run();
+      //   return;
+      // } else {
+      //   return;
+      // }
+      // props.editor.toggleMark("link");
+    };
+
     const items = ref([
       {
         icon: "bold",
@@ -35,6 +57,12 @@ export default {
         isActive: () => props.editor.isActive("strike"),
       },
       {
+        icon: "underline",
+        title: "Underline",
+        action: () => props.editor.chain().focus().toggleUnderline().run(),
+        isActive: () => props.editor.isActive("underline"),
+      },
+      {
         icon: "code-view",
         title: "Code",
         action: () => props.editor.chain().focus().toggleCode().run(),
@@ -48,18 +76,6 @@ export default {
       },
       {
         type: "divider",
-      },
-      {
-        icon: "h-1",
-        title: "Heading 1",
-        action: () => props.editor.chain().focus().toggleHeading({ level: 1 }).run(),
-        isActive: () => props.editor.isActive("heading", { level: 1 }),
-      },
-      {
-        icon: "h-2",
-        title: "Heading 2",
-        action: () => props.editor.chain().focus().toggleHeading({ level: 2 }).run(),
-        isActive: () => props.editor.isActive("heading", { level: 2 }),
       },
       {
         icon: "paragraph",
@@ -95,6 +111,33 @@ export default {
         type: "divider",
       },
       {
+        icon: "align-left",
+        title: "Align Left",
+        action: () => props.editor.chain().focus().setTextAlign("left").run(),
+        isActive: () => props.editor.isActive({ textAlign: "left" }),
+      },
+      {
+        icon: "align-center",
+        title: "Align Center",
+        action: () => props.editor.chain().focus().setTextAlign("center").run(),
+        isActive: () => props.editor.isActive({ textAlign: "center" }),
+      },
+      {
+        icon: "align-right",
+        title: "Align Right",
+        action: () => props.editor.chain().focus().setTextAlign("right").run(),
+        isActive: () => props.editor.isActive({ textAlign: "right" }),
+      },
+      {
+        icon: "align-justify",
+        title: "Justify",
+        action: () => props.editor.chain().focus().setTextAlign("justify").run(),
+        isActive: () => props.editor.isActive({ textAlign: "justify" }),
+      },
+      {
+        type: "divider",
+      },
+      {
         icon: "double-quotes-l",
         title: "Blockquote",
         action: () => props.editor.chain().focus().toggleBlockquote().run(),
@@ -104,6 +147,12 @@ export default {
         icon: "separator",
         title: "Horizontal Rule",
         action: () => props.editor.chain().focus().setHorizontalRule().run(),
+      },
+      {
+        icon: "link",
+        title: "Link",
+        action: toggleLink,
+        isActive: () => props.editor.isActive("link"),
       },
       {
         type: "divider",
@@ -131,19 +180,69 @@ export default {
         title: "Redo",
         action: () => props.editor.chain().focus().redo().run(),
       },
+      {
+        icon: "font-size",
+        title: "Toggle Formatting",
+        action: () => props.editor.chain().focus().redo().run(),
+      },
     ]);
 
-    return { items };
+    const openEmoji = () => {
+      emitter.emit("openEmoji", true);
+    };
+
+    const setEmoji = e => {
+      console.log(e);
+    };
+
+    return { items, openEmoji, setEmoji };
   },
 };
 </script>
 
 <template>
-  <div>
-    <template v-for="(item, index) in items">
-      <div class="divider" v-if="item.type === 'divider'" :key="`divider${index}`" />
-      <menu-item v-else :key="index" v-bind="item" />
-    </template>
+  <div class="flex flex-row items-end flex-[0_0_auto] p-1 justify-between">
+    <div class="flex flex-wrap">
+      <template v-for="(item, index) in items">
+        <div
+          class="w-1px h-5 bg-gray-900/10 ml-2 mr-3"
+          v-if="item.type === 'divider'"
+          :key="`divider${index}`"
+        />
+        <menu-item v-else :key="index" v-bind="item" />
+      </template>
+    </div>
+    <div class="flex flex-row">
+      <div class="hover:(bg-gray-900 text-white) rounded p-1 cursor-pointer">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          class="h-6 w-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <EmojiPicker @emoji-selected="setEmoji" />
+      </div>
+      <div class="hover:(bg-gray-900 text-white) rounded p-1 cursor-pointer">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-6 w-6 transform rotate-90"
+        >
+          <path
+            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+          ></path>
+        </svg>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -7,6 +7,14 @@ import { debounce } from "lodash-es";
 
 export const emitter = mitt();
 
+// !TODO: Create a TaskScheduler class
+// https://stackoverflow.com/questions/51850236/javascript-scheduler-implementation-using-promises
+// Cool read
+// https://css-tricks.com/creating-scheduled-push-notifications/
+
+// !TODO: Implement ServiceWorker
+// https://rubenr.dev/en/pwa-vite/
+
 export const piniaLogger = ({ store }) => {
   store.$subscribe((mutation, state) => {
     let mut = `{"store": ${mutation.storeId}, "type": ${mutation.type}, "payload": ${mutation.payload}}`;

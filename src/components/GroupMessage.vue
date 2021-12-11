@@ -40,7 +40,7 @@ export default {
       <img
         :src="message.profile"
         :alt="message.sender"
-        class="w-10 h-10 rounded mr-3 object-cover cursor-pointer"
+        class="w-10 h-10 rounded flex-shrink-0 mr-3 object-cover cursor-pointer"
         @click="showImagePopup = true"
       />
       <VueEasyLightbox

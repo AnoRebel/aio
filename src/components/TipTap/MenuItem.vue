@@ -34,12 +34,14 @@ export default {
 
 <template>
   <button
-    class="menu-item"
-    :class="{ 'is-active': isActive ? isActive() : null }"
+    class="w-7 h-7 border-none text-gray-900 bg-transparent hover:(bg-gray-900 text-white) rounded p-1 mr-1"
+    :class="{
+      '!bg-gray-900 text-white': isActive ? isActive() : null,
+    }"
     @click="action"
     :title="title"
   >
-    <svg class="remix">
+    <svg class="remix w-full h-full fill-current">
       <use :xlink:href="`${remixiconUrl}#ri-${icon}`" />
     </svg>
   </button>

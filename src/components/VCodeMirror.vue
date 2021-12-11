@@ -26,6 +26,11 @@ export default {
     },
     onChange: {
       type: Function,
+      required: true,
+    },
+    height: {
+      type: String,
+      default: "80vh",
     },
   },
   setup(props) {
@@ -229,7 +234,7 @@ export default {
       extensions: [
         basicSetup,
         EditorView.theme({
-          ".cm-scroller": { minHeight: "80vh" },
+          ".cm-scroller": { minHeight: props.height },
         }),
         tabSize.of(EditorState.tabSize.of(4)),
         languageConf.of(initLanguage),

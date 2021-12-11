@@ -1,5 +1,5 @@
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { Editor, EditorContent, VueNodeViewRenderer } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import TaskList from "@tiptap/extension-task-list";
@@ -7,16 +7,25 @@ import TaskItem from "@tiptap/extension-task-item";
 import Highlight from "@tiptap/extension-highlight";
 import CharacterCount from "@tiptap/extension-character-count";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+// import FloatingMenu from "@tiptap/extension-floating-menu";
+// import BubbleMenu from "@tiptap/extension-bubble-menu";
+// import Focus from "@tiptap/extension-focus";
+import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
+import Typography from "@tiptap/extension-typography";
+import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
 
 import lowlight from "lowlight";
 
-import { CodeBlockComponent } from "@/components/TipTap";
+import { CodeBlockComponent, MenuBar } from "@/components/TipTap";
 import { GroupChatHeader, EmojiPicker, GroupMessage } from "@/components";
 import { emitter } from "@/utils";
 import { groupMessages } from "@/seed";
 
 export default {
-  components: { GroupChatHeader, GroupMessage, EmojiPicker },
+  components: { MenuBar, EditorContent, GroupChatHeader, GroupMessage, EmojiPicker },
   setup() {
     const editor = ref(null);
     onMounted(() => {
@@ -24,12 +33,21 @@ export default {
       el.scrollTop = el.scrollHeight;
       editor.value = new Editor({
         extensions: [
-          StarterKit.configure({
-            history: true,
-          }),
-          Highlight,
+          StarterKit,
           TaskList,
-          TaskItem,
+          TaskItem.configure({
+            nested: true,
+          }),
+          Image,
+          Typography,
+          Underline,
+          Link,
+          Highlight.configure({
+            multicolor: true,
+          }),
+          TextAlign.configure({
+            types: ["heading", "paragraph"],
+          }),
           CodeBlockLowlight.extend({
             addNodeView() {
               return VueNodeViewRenderer(CodeBlockComponent);
@@ -38,15 +56,26 @@ export default {
           CharacterCount.configure({
             limit: 10000,
           }),
+          Placeholder.configure({
+            // emptyEditorClass: "text-gray-500",
+            // emptyNodeClass: "text-gray-500",
+            placeholder: "Write something …",
+          }),
         ],
       });
     });
+
     const openEmoji = () => {
       emitter.emit("openEmoji", true);
     };
     const setEmoji = e => {
       console.log(e);
     };
+
+    onBeforeUnmount(() => {
+      editor.value.destroy();
+    });
+
     return { editor, openEmoji, setEmoji, groupMessages };
   },
 };
@@ -62,10 +91,23 @@ export default {
         <GroupMessage :message="message" />
       </template>
     </main>
-    <footer class="px-4 pt-3 pb-2">
-      <menu-bar class="editor__header" :editor="editor" />
-      <editor-content class="editor__content" :editor="editor" />
-      <div class="relative flex">
+    <footer class="pl-6 pr-2 pb-2">
+      <div
+        class="flex flex-col max-h-100 bg-white text-gray-900 rounded-lg border-2 border-gray-900"
+        v-if="editor"
+      >
+        <editor-content
+          class="w-full p-1 flex-auto overflow-x-hidden overflow-y-auto touch-scrolling"
+          :editor="editor"
+        />
+        <div class="text-gray-700/50 text-xs px-2" v-if="editor">
+          {{ editor.storage.characterCount.characters() }}/10000 characters
+          <br />
+          {{ editor.storage.characterCount.words() }} words
+        </div>
+        <menu-bar class="border-t border-gray-900" :editor="editor" />
+      </div>
+      <!-- <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
           <button
             type="button"
@@ -253,7 +295,7 @@ export default {
             </svg>
           </button>
         </div>
-      </div>
+      </div> -->
     </footer>
     <!-- <div class="pb-4 px-4 flex-none">
       <div class="flex rounded-lg border-2 border-grey overflow-hidden">
@@ -274,34 +316,25 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(236, 236, 236, var(--tw-bg-opacity)) rgba(17, 24, 39, var(--tw-bg-opacity));
-}
-.scrollbar::-webkit-scrollbar {
-  cursor: pointer;
-  width: 0.65rem;
-  height: 0.65rem;
-}
-
-.scrollbar::-webkit-scrollbar-track {
-  cursor: pointer;
-  background-color: #111827;
-  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  border-radius: 0.5rem;
-  background-color: #ececec;
-  background-color: rgba(236, 236, 236, var(--tw-bg-opacity));
+<style lang="scss">
+.has-focus {
+  @apply bg-gray-500 shadow-sm text-black;
 }
 
 .ProseMirror {
+  @apply min-h-6 focus:outline-none px-1;
+
   code {
     background-color: rgba(#616161, 0.1);
     color: #616161;
+  }
+  /* Placeholder (at the top) */
+  p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #adb5bd;
+    pointer-events: none;
+    height: 0;
   }
 
   pre {
@@ -372,7 +405,9 @@ export default {
   }
 
   mark {
-    background-color: #faf594;
+    @apply rounded p-0.5;
+    background-color: #ffe066;
+    box-decoration-break: clone;
   }
 
   img {
@@ -407,9 +442,9 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 26rem;
-  color: #0d0d0d;
+  color: #141414;
   background-color: #fff;
-  border: 3px solid #0d0d0d;
+  border: 0.15rem solid #141414;
   border-radius: 0.75rem;
 
   &__header {
@@ -418,7 +453,7 @@ export default {
     flex: 0 0 auto;
     flex-wrap: wrap;
     padding: 0.25rem;
-    border-bottom: 3px solid #0d0d0d;
+    border-bottom: 0.15rem solid #141414;
   }
 
   &__content {
@@ -428,5 +463,8 @@ export default {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
+}
+.touch-scrolling {
+  -webkit-overflow-scrolling: touch;
 }
 </style>

@@ -117,10 +117,10 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-row">
+  <div class="w-full flex flex-row">
     <div
       class="
-        flex flex-col
+        flex flex-col flex-shrink-0
         w-74
         h-screen
         border-r border-gray-200
@@ -228,7 +228,7 @@ export default {
         </nav>
       </div>
     </div>
-    <div class="h-screen flex flex-col flex-grow">
+    <div class="w-full h-screen flex flex-col">
       <header class="w-full">
         <div
           class="relative z-10 flex-shrink-0 h-16 bg-white border-b border-gray-200 shadow-sm flex"
