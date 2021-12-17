@@ -5,35 +5,59 @@ import StarterKit from "@tiptap/starter-kit";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Highlight from "@tiptap/extension-highlight";
+import HardBreak from "@tiptap/extension-hard-break";
 import CharacterCount from "@tiptap/extension-character-count";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 // import FloatingMenu from "@tiptap/extension-floating-menu";
-// import BubbleMenu from "@tiptap/extension-bubble-menu";
-// import Focus from "@tiptap/extension-focus";
+import BubbleMenu from "@tiptap/extension-bubble-menu";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import Typography from "@tiptap/extension-typography";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
+import Mention from "@tiptap/extension-mention";
 
 import lowlight from "lowlight";
 
-import { CodeBlockComponent, MenuBar } from "@/components/TipTap";
+import {
+  CodeBlockComponent,
+  MenuBar,
+  sendMessage,
+  customNewline,
+  suggestion,
+  ColorHighlighter,
+  ExternalVideo,
+  SmilieReplacer,
+} from "@/components/TipTap";
 import { GroupChatHeader, EmojiPicker, GroupMessage } from "@/components";
 import { emitter } from "@/utils";
 import { groupMessages } from "@/seed";
 
 export default {
-  components: { MenuBar, EditorContent, GroupChatHeader, GroupMessage, EmojiPicker },
+  components: { MenuBar, BubbleMenu, EditorContent, GroupChatHeader, GroupMessage, EmojiPicker },
   setup() {
     const editor = ref(null);
     onMounted(() => {
       const el = document.getElementById("messages");
       el.scrollTop = el.scrollHeight;
+      const CustomHardBreak = HardBreak.extend({
+        addKeyboardShortcuts() {
+          return {
+            "Mod-Enter": () => this.editor.commands.setHardBreak(),
+            "Shift-Enter": () => this.editor.commands.addNewline(),
+          };
+        },
+      });
       editor.value = new Editor({
+        autofocus: "end",
         extensions: [
-          StarterKit,
+          sendMessage,
+          StarterKit.configure({
+            hardBreak: false,
+          }),
+          customNewline,
+          CustomHardBreak,
           TaskList,
           TaskItem.configure({
             nested: true,
@@ -42,11 +66,18 @@ export default {
           Typography,
           Underline,
           Link,
+          ExternalVideo,
           Highlight.configure({
             multicolor: true,
           }),
           TextAlign.configure({
             types: ["heading", "paragraph"],
+          }),
+          Mention.configure({
+            HTMLAttributes: {
+              class: "mention",
+            },
+            suggestion,
           }),
           CodeBlockLowlight.extend({
             addNodeView() {
@@ -61,6 +92,8 @@ export default {
             // emptyNodeClass: "text-gray-500",
             placeholder: "Write something …",
           }),
+          ColorHighlighter,
+          SmilieReplacer,
         ],
       });
     });
@@ -96,14 +129,91 @@ export default {
         class="flex flex-col max-h-100 bg-white text-gray-900 rounded-lg border-2 border-gray-900"
         v-if="editor"
       >
+        <bubble-menu
+          class="bubble-menu"
+          :tippy-options="{ animation: false }"
+          :editor="editor"
+          v-if="editor"
+          v-show="editor.isActive('image')"
+        >
+          <button
+            @click="editor.chain().focus().setImage({ size: 'small' }).run()"
+            :class="{
+              'is-active': editor.isActive('image', {
+                size: 'small',
+              }),
+            }"
+          >
+            Small
+          </button>
+          <button
+            @click="editor.chain().focus().setImage({ size: 'medium' }).run()"
+            :class="{
+              'is-active': editor.isActive('image', {
+                size: 'medium',
+              }),
+            }"
+          >
+            Medium
+          </button>
+          <button
+            @click="editor.chain().focus().setImage({ size: 'large' }).run()"
+            :class="{
+              'is-active': editor.isActive('image', {
+                size: 'large',
+              }),
+            }"
+          >
+            Large
+          </button>
+          <span style="color: #aaa">|</span>
+          <button
+            @click="editor.chain().focus().setImage({ float: 'left' }).run()"
+            :class="{
+              'is-active': editor.isActive('image', {
+                float: 'left',
+              }),
+            }"
+          >
+            Left
+          </button>
+          <button
+            @click="editor.chain().focus().setImage({ float: 'none' }).run()"
+            :class="{
+              'is-active': editor.isActive('image', {
+                float: 'none',
+              }),
+            }"
+          >
+            No float
+          </button>
+          <button
+            @click="editor.chain().focus().setImage({ float: 'right' }).run()"
+            :class="{
+              'is-active': editor.isActive('image', {
+                float: 'right',
+              }),
+            }"
+          >
+            Right
+          </button>
+          <span style="color: #aaa">|</span>
+          <button @click="addImage">Change</button>
+        </bubble-menu>
         <editor-content
           class="w-full p-1 flex-auto overflow-x-hidden overflow-y-auto touch-scrolling"
           :editor="editor"
         />
-        <div class="text-gray-700/50 text-xs px-2" v-if="editor">
-          {{ editor.storage.characterCount.characters() }}/10000 characters
-          <br />
-          {{ editor.storage.characterCount.words() }} words
+        <div class="flex justify-between text-gray-700/50 text-xs px-2" v-if="editor">
+          <div>
+            <span>{{ editor.storage.characterCount.characters() }}/10000</span>
+            <!-- <span>{{ editor.storage.characterCount.words() }} words</span> -->
+          </div>
+          &nbsp;
+
+          <div class="space-x-2">
+            <span>Return to send</span><span>Shift + Return to add a new line</span>
+          </div>
         </div>
         <menu-bar class="border-t border-gray-900" :editor="editor" />
       </div>
@@ -317,16 +427,20 @@ export default {
 </template>
 
 <style lang="scss">
-.has-focus {
-  @apply bg-gray-500 shadow-sm text-black;
-}
-
 .ProseMirror {
   @apply min-h-6 focus:outline-none px-1;
 
+  a {
+    @apply text-blue-500 hover:(text-blue-400 cursor-pointer) underline;
+  }
+
   code {
+    font-size: 0.9rem;
+    padding: 0.25em;
+    border-radius: 0.25em;
     background-color: rgba(#616161, 0.1);
     color: #616161;
+    box-decoration-break: clone;
   }
   /* Placeholder (at the top) */
   p.is-editor-empty:first-child::before {
@@ -404,6 +518,10 @@ export default {
     }
   }
 
+  .mention {
+    @apply inline-block bg-blue-300 text-blue-600 no-underline px-1 rounded;
+  }
+
   mark {
     @apply rounded p-0.5;
     background-color: #ffe066;
@@ -411,12 +529,47 @@ export default {
   }
 
   img {
+    @apply max-w-full h-auto;
+    &.ProseMirror-selectednode {
+      outline: 2px solid #68cef8;
+    }
+  }
+  .image-small {
+    max-width: 200px;
+  }
+  .image-medium {
+    max-width: 500px;
+  }
+  .image-large {
     max-width: 100%;
-    height: auto;
+  }
+  .image-float-none {
+    float: none;
+  }
+  .image-float-left {
+    float: left;
+  }
+  .image-float-right {
+    float: right;
+  }
+
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 10px;
+    height: 0;
+    overflow: hidden;
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   hr {
-    margin: 1rem 0;
+    @apply my-4 mx-0;
   }
   ul[data-type="taskList"] {
     list-style: none;
@@ -435,6 +588,28 @@ export default {
       > div {
         flex: 1 1 auto;
       }
+    }
+  }
+}
+.bubble-menu {
+  display: flex;
+  background-color: #0d0d0d;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  button {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0 0.2rem;
+    opacity: 0.6;
+    &:hover,
+    &.is-active {
+      opacity: 1;
+    }
+    &.is-active {
+      text-decoration: underline;
     }
   }
 }

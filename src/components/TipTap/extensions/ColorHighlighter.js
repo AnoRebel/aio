@@ -1,7 +1,7 @@
 import { Extension } from "@tiptap/core";
 import { Plugin } from "prosemirror-state";
 
-import findColors from "@/components/TipTap/findColors";
+import findColors from "@/components/TipTap/extensions/findColors";
 
 export default Extension.create({
   name: "colorHighlighter",

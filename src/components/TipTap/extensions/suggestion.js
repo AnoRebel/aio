@@ -1,38 +1,13 @@
 import { VueRenderer } from "@tiptap/vue-3";
 import tippy from "tippy.js";
-import { MentionList } from "@/components/TipTap";
+
+import MentionList from "@/components/TipTap/extensions/MentionList.vue";
+import { users } from "@/seed";
 
 export default {
   items: ({ query }) => {
-    return [
-      "Lea Thompson",
-      "Cyndi Lauper",
-      "Tom Cruise",
-      "Madonna",
-      "Jerry Hall",
-      "Joan Collins",
-      "Winona Ryder",
-      "Christina Applegate",
-      "Alyssa Milano",
-      "Molly Ringwald",
-      "Ally Sheedy",
-      "Debbie Harry",
-      "Olivia Newton-John",
-      "Elton John",
-      "Michael J. Fox",
-      "Axl Rose",
-      "Emilio Estevez",
-      "Ralph Macchio",
-      "Rob Lowe",
-      "Jennifer Grey",
-      "Mickey Rourke",
-      "John Cusack",
-      "Matthew Broderick",
-      "Justine Bateman",
-      "Lisa Bonet",
-    ]
-      .filter(item => item.toLowerCase().startsWith(query.toLowerCase()))
-      .slice(0, 5);
+    let names = users.map(user => user.name);
+    return names.filter(name => name.toLowerCase().startsWith(query.toLowerCase())).slice(0, 5);
   },
 
   render: () => {

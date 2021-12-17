@@ -5,13 +5,12 @@ import { BaseLayout, SideBarLayout, ChatLayout, GalleryLayout } from "@/layouts"
 import { KanbanBoard, PrivateChat, GroupChat, MenuBar, VCodeMirror } from "@/components";
 import { Splitpanes, Pane } from "splitpanes-esm";
 import "splitpanes-esm/dist/splitpanes.css";
-
-const log = data => console.log(data);
+import KanbanScreen from "@/views/KanbanScreen.vue";
 </script>
 
 <template>
   <div class="h-full w-full">
-    <splitpanes>
+    <!-- <splitpanes>
       <pane class="w-1/3">
         <div class="w-full bg-gray-900 border-right">
           <p>Navigation</p>
@@ -20,11 +19,9 @@ const log = data => console.log(data);
       <pane class="w-2/3">
         <span>2</span>
       </pane>
-    </splitpanes>
+    </splitpanes> -->
+    <KanbanScreen />
   </div>
-  <ChatLayout>
-    <GroupChat />
-  </ChatLayout>
 </template>
 
 <style lang="scss">

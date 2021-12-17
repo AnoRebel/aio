@@ -47,7 +47,7 @@ const languageOptions = [
   { value: languages.javascript, label: "Javascript/TypeScript" },
   { value: languages.jinja2Lang, label: "Jinja2" },
   { value: languages.json, label: "Json" },
-  { value: languages.juliaLang, label: "Julia" },
+  { value: languages.julia, label: "Julia" },
   { value: languages.kotlinLang, label: "Kotlin" },
   { value: languages.lessLang, label: "Less" },
   { value: languages.lezer, label: "Lezer" },

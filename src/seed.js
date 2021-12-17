@@ -202,6 +202,121 @@ export const groupMessages = [
       resolution: "",
     },
   },
+  {
+    id: 7,
+    type: "rich",
+    profile:
+      "https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
+    sender: "Hawkeye",
+    isSender: true,
+    text: "...",
+    code: "",
+    content: JSON.stringify({
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: "left",
+          },
+          content: [
+            {
+              type: "text",
+              text: "fgsdfg",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: "left",
+          },
+          content: [
+            {
+              type: "text",
+              text: "fdgsdfgs",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: "left",
+          },
+          content: [
+            {
+              type: "text",
+              text: "fsgsfdg",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: "left",
+          },
+          content: [
+            {
+              type: "text",
+              text: "sgdfgsd",
+            },
+          ],
+        },
+      ],
+    }),
+    linked_user: "Banners",
+    date: "",
+  },
+  {
+    id: 8,
+    type: "rich",
+    profile:
+      "https://cdna.artstation.com/p/assets/covers/images/017/941/900/large/poligone-cg-morbius-2.jpg?1557932833",
+    sender: "Morbius",
+    isSender: false,
+    text: "",
+    code: "",
+    content: JSON.stringify({
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: "left",
+          },
+          content: [
+            {
+              type: "mention",
+              attrs: {
+                id: "Spidey",
+                label: null,
+              },
+            },
+            {
+              type: "text",
+              text: " …",
+            },
+          ],
+        },
+        {
+          type: "image",
+          attrs: {
+            src: "https://i.ytimg.com/vi/aC5ur62342Y/maxresdefault.jpg",
+            alt: "Person",
+            title: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: "left",
+          },
+        },
+      ],
+    }),
+    linked_user: "",
+    date: "",
+  },
 ];
 
 export const users = [
@@ -212,5 +327,69 @@ export const users = [
     date: "",
     image:
       "https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
+  },
+  {
+    id: 3,
+    name: "Steve Rogers",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
+  },
+  {
+    id: 4,
+    name: "Tony Stark",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1634656833613-96e4188bb37e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287&q=80",
+  },
+  {
+    id: 5,
+    name: "WandaVision",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1614796998929-6c194ea22306?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+  },
+  {
+    id: 6,
+    name: "Spidey",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1614461216444-e4d757e5dc3f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+  },
+  {
+    id: 7,
+    name: "Banners",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
+  },
+  {
+    id: 8,
+    name: "Tony Stark",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
+  },
+  {
+    id: 9,
+    name: "Hawkeye",
+    details: "",
+    date: "",
+    profile:
+      "https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
+  },
+  {
+    id: 10,
+    name: "Morbius",
+    details: "",
+    date: "",
+    profile:
+      "https://cdna.artstation.com/p/assets/covers/images/017/941/900/large/poligone-cg-morbius-2.jpg?1557932833",
   },
 ];

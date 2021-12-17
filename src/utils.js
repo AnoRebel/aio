@@ -56,6 +56,25 @@ export const countWords = doc => {
   return `wc: ${count}`;
 };
 
+export const renderInfoSvg = (node, classNames = []) => {
+  const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+  iconSvg.setAttribute("fill", "currentColor");
+  iconSvg.setAttribute("viewBox", "0 0 24 24");
+  // iconSvg.setAttribute("stroke", "black");
+  if (classNames.length > 0) iconSvg.classList.add(...classNames);
+
+  iconPath.setAttribute("d", "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z");
+  iconPath.setAttribute("stroke-linecap", "round");
+  iconPath.setAttribute("stroke-linejoin", "round");
+  iconPath.setAttribute("stroke-width", "2");
+
+  iconSvg.appendChild(iconPath);
+
+  return node.appendChild(iconSvg);
+};
+
 export const createSocket = () => {
   if (_SOCKET) return _SOCKET;
   _SOCKET = io("URL", { rejectUnauthorized: false }); // transports: ['websockets']

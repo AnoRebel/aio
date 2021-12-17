@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref, computed, onBeforeUnmount } from "vue";
+import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
 import { useDark } from "@vueuse/core";
 import { VuemojiPicker } from "vuemoji-picker";
 import {
@@ -22,21 +22,21 @@ export default {
     DialogOverlay,
     DialogTitle,
   },
-  emits: ["emoji-selected"],
+  emits: ["emoji-selected", "close-emoji"],
   props: {
     classNames: {
       type: String,
       default: "bottom-15 right-24",
     },
+    open: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(_, { emit }) {
     onMounted(async () => {
-      emitter.on("openEmoji", e => {
-        openEmoji.value = e;
-      });
       customEmoji.value = await loadCustomEmoji();
     });
-    const openEmoji = ref(false);
     const customEmoji = ref([]);
     const darkMode = ref("auto");
     const baseUrl =
@@ -66,28 +66,21 @@ export default {
       return darkMode.value === "dark";
     });
     const onEmojiClick = detail => {
-      emit(
-        "emoji-selected",
-        `Event: @skinToneChange\n\nData:\n\n${JSON.stringify(detail, null, 2)}`
-      );
+      emit("emoji-selected", JSON.stringify(detail, null, 2));
     };
     const onSkinToneChange = detail => {
-      emit(
-        "emoji-selected",
-        `Event: @skinToneChange\n\nData:\n\n${JSON.stringify(detail, null, 2)}`
-      );
+      // let det = `Event: @skinToneChange\n\nData:\n\n${JSON.stringify(detail, null, 2)}`;
+      emit("emoji-selected", JSON.stringify(detail, null, 2));
     };
-    onBeforeUnmount(() => {
-      emitter.off("openEmoji");
-    });
-    return { style, openEmoji, onEmojiClick, onSkinToneChange, isDark, customEmoji };
+    onBeforeUnmount(() => {});
+    return { style, onEmojiClick, onSkinToneChange, isDark, customEmoji };
   },
 };
 </script>
 
 <template>
-  <TransitionRoot appear :show="openEmoji" as="template">
-    <Dialog as="div" @close="openEmoji = false">
+  <TransitionRoot appear :show="open" as="template">
+    <Dialog as="div" @close="$emit('close-emoji')">
       <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="min-h-screen px-4 text-center">
           <TransitionChild

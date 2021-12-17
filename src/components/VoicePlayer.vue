@@ -215,6 +215,7 @@ input[type="range"]:focus {
 
 // Range Track
 input[type="range"]::-webkit-slider-runnable-track {
+  --track-background: rgb(80, 85, 92);
   width: var(--track-width);
   height: var(--track-height);
   cursor: pointer;

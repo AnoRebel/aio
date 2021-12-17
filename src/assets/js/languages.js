@@ -10,6 +10,7 @@ import { lezer } from "@codemirror/lang-lezer";
 import { rust } from "@codemirror/lang-rust";
 import { python } from "@codemirror/lang-python";
 import { GQL } from "@restbox/graphql";
+import { julia } from "lang-julia";
 import {
   sql,
   Cassandra,
@@ -53,7 +54,7 @@ import { haxe } from "@codemirror/legacy-modes/mode/haxe";
 import { http } from "@codemirror/legacy-modes/mode/http";
 import { groovy } from "@codemirror/legacy-modes/mode/groovy";
 import { jinja2 } from "@codemirror/legacy-modes/mode/jinja2";
-import { julia } from "@codemirror/legacy-modes/mode/julia";
+// import { julia } from "@codemirror/legacy-modes/mode/julia";
 import { liveScript } from "@codemirror/legacy-modes/mode/livescript";
 import { oCaml, fSharp } from "@codemirror/legacy-modes/mode/mllike";
 import { nginx } from "@codemirror/legacy-modes/mode/nginx";
@@ -102,7 +103,7 @@ const haxeLang = StreamLanguage.define(haxe);
 const httpLang = StreamLanguage.define(http);
 const groovyLang = StreamLanguage.define(groovy);
 const jinja2Lang = StreamLanguage.define(jinja2);
-const juliaLang = StreamLanguage.define(julia);
+// const juliaLang = StreamLanguage.define(julia);
 const livescriptLang = StreamLanguage.define(liveScript);
 const oCamlLang = StreamLanguage.define(oCaml);
 const fSharpLang = StreamLanguage.define(fSharp);
@@ -141,6 +142,7 @@ export {
   javascript,
   css,
   java,
+  julia,
   GQL,
   php,
   markdown,
@@ -177,7 +179,6 @@ export {
   httpLang,
   groovyLang,
   jinja2Lang,
-  juliaLang,
   livescriptLang,
   oCamlLang,
   fSharpLang,

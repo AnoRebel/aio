@@ -67,6 +67,7 @@ export default {
     return {
       selectedIndex,
       selectItem,
+      onKeyDown,
     };
   },
 };
@@ -75,17 +76,7 @@ export default {
 <template>
   <div class="text-sm p-1 relative rounded bg-white text-black overflow-hidden shadow">
     <button
-      class="
-        block
-        m-0
-        w-full
-        text-left
-        bg-transparent
-        rounded-md
-        border-1px border-transparent
-        py-1
-        px-2
-      "
+      class="block m-0 w-full text-left bg-transparent rounded border-1px border-transparent py-1 px-2 hover:bg-gray-100"
       :class="{ 'border-[#000]': index === selectedIndex }"
       v-for="(item, index) in items"
       :key="index"
@@ -95,4 +86,3 @@ export default {
     </button>
   </div>
 </template>
-

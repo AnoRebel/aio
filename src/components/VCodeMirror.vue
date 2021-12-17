@@ -154,7 +154,8 @@ export default {
     const breakpointMarker = new (class extends GutterMarker {
       toDOM() {
         // return document.createTextNode("💔");
-        return document.createTextNode("★");
+        // return document.createTextNode("★");
+        return document.createTextNode("●");
       }
     })();
 

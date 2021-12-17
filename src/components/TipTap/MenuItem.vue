@@ -34,7 +34,7 @@ export default {
 
 <template>
   <button
-    class="w-7 h-7 border-none text-gray-900 bg-transparent hover:(bg-gray-900 text-white) rounded p-1 mr-1"
+    class="w-7 h-7 border-none text-gray-900 bg-transparent hover:(bg-gray-900 text-white) rounded p-1 mr-0.5"
     :class="{
       '!bg-gray-900 text-white': isActive ? isActive() : null,
     }"
