@@ -85,7 +85,7 @@ export default {
 
 <template>
   <Container
-    class="h-full flex overflow-x-auto gap-8 p-8"
+    class="h-full !flex space-x-6 overflow-x-auto p-8"
     group-name="lanes"
     tag="div"
     orientation="horizontal"
@@ -137,7 +137,7 @@ export default {
           </template>
           <form
             v-if="details[index].show"
-            class="flex flex-col border-t border-gray-300 pt-2 mt-2"
+            class="w-full flex flex-col border-t border-gray-300 pt-2"
             @submit.prevent="addTicket(index, lane.name)"
           >
             <input v-model="details[index].author" type="text" class="my-1 rounded-md h-8" />
@@ -145,7 +145,7 @@ export default {
           </form>
           <button
             v-else
-            class="text-white rounded py-1.5 bg-green-800 w-full"
+            class="w-full text-white rounded-md shadow py-1.5 bg-green-800 hover:bg-green-700"
             @click="details[index].show = true"
           >
             Add Ticket
@@ -165,7 +165,7 @@ export default {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
-smooth-dnd-container.horizontal {
-  display: flex !important;
-}
+// smooth-dnd-container.horizontal {
+//   display: flex !important;
+// }
 </style>

@@ -354,9 +354,6 @@ const useLaneStore = defineStore("lanes", {
         id: this.altLanes.length + 1,
         name: data.name,
         type: "lane",
-        props: {
-          orientation: "horizontal",
-        },
         tickets: data.tickets ?? [],
       };
       this.altLanes.push(newLane);
@@ -388,9 +385,6 @@ const useLaneStore = defineStore("lanes", {
         id: tickets.length + 1,
         type: "ticket",
         loading: false,
-        props: {
-          orientation: "vertical",
-        },
         data: {
           title: ticket.title || "AnoRebel",
           author: ticket.author || "Ano Rebel",

@@ -26,11 +26,11 @@ export default {
         v-if="ticket.loading"
         class="flex space-x-2 bg-gray-50 text-gray-900 dark:text-gray-200 dark:bg-gray-900 px-4 py-2 rounded-t-lg"
       >
-        <RefreshIcon class="w-6 h-6 animate-spin" viewBox="0 0 24 24"></RefreshIcon>
-        <span>Processing...</span>
+        <RefreshIcon class="w-5 h-5 animate-spin" viewBox="0 0 24 24"></RefreshIcon>
+        <span class="text-sm">Processing...</span>
       </div>
-      <div class="p-4 space-y-2">
-        <p>{{ ticket.data.author }}</p>
+      <div class="p-2 space-y-2">
+        <p class="text-sm">{{ ticket.data.author }}</p>
       </div>
     </div>
   </Draggable>
@@ -45,7 +45,7 @@ export default {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
-smooth-dnd-container.horizontal {
-  display: flex !important;
-}
+// smooth-dnd-container.horizontal {
+//   display: flex !important;
+// }
 </style>
